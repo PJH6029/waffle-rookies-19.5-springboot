@@ -35,6 +35,7 @@ class UserControllerAdvice {
 
     // TODO ConstraintsViolationException ??
     // TODO return type: ResponseEntity
+    // TODO validation 단계에서 잡는게 맞는지, 여기서 잡는게 맞는지??
     @ExceptionHandler(DataIntegrityViolationException::class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     // SQLIntegrityConstraint~을 스프림 내부(아마 dispatcherServlet)에서 미리 잡아서 던져주기에, 바로 exception을 잡을 수 없음

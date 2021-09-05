@@ -7,9 +7,7 @@ import org.modelmapper.ModelMapper
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
-import java.util.stream.Collectors
 import javax.validation.Valid
 
 @RestController
@@ -34,12 +32,12 @@ class UserController(
         } else {
 
          */
-            val newUser = modelMapper.map(body, User::class.java)
-            userService.saveUser(newUser)
+        val newUser = modelMapper.map(body, User::class.java)
+        userService.addUser(newUser)
 
-            val responseBody = modelMapper.map(newUser, UserDto.Response::class.java)
-            // return ResponseEntity.ok(userService.saveUser(newUserResponse))
-            return ResponseEntity<UserDto.Response>(responseBody, HttpStatus.CREATED)
+        val responseBody = modelMapper.map(newUser, UserDto.Response::class.java)
+        // return ResponseEntity.ok(userService.saveUser(newUserResponse))
+        return ResponseEntity<UserDto.Response>(responseBody, HttpStatus.CREATED)
         //}
     }
 

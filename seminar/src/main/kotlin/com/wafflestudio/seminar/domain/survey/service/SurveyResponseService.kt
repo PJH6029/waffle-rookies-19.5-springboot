@@ -25,4 +25,10 @@ class SurveyResponseService(
     fun getSurveyResponseById(id: Long): SurveyResponse? {
         return surveyResponseRepository.findByIdOrNull(id) ?: throw SurveyNotFoundException()
     }
+
+    fun addSurveyResponse(newSurveyResponse: SurveyResponse): SurveyResponse {
+        // val os = operatingSystemRepository.findByNameEquals(newSurveyResponse.os)
+
+        return surveyResponseRepository.save(newSurveyResponse)
+    }
 }

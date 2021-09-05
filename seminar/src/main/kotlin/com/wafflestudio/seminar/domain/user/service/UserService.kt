@@ -12,7 +12,7 @@ import java.sql.SQLIntegrityConstraintViolationException
 class UserService(
     private val userRepository: UserRepository,
 ) {
-    fun saveUser(newUser: User): User {
+    fun addUser(newUser: User): User {
         return userRepository.save(newUser)
     }
 

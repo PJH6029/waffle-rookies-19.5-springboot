@@ -16,6 +16,10 @@ class SurveyResponse(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
+    @ManyToOne(cascade = [CascadeType.PERSIST])  // TODO CascadeType
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    var user: User? = null,
+
     @ManyToOne
     @JoinColumn(name = "os_id", referencedColumnName = "id")
     @NotNull
@@ -23,19 +27,19 @@ class SurveyResponse(
 
     @Column(name = "spring_exp")
     @NotNull
-    @Min(0, message = "The value must be between 1 and 5")
+    @Min(1, message = "The value must be between 1 and 5")
     @Max(5, message = "The value must be between 1 and 5")
     var springExp: Int? = null,
 
     @Column(name = "rdb_exp")
     @NotNull
-    @Min(0, message = "The value must be between 1 and 5")
+    @Min(1, message = "The value must be between 1 and 5")
     @Max(5, message = "The value must be between 1 and 5")
     var rdbExp: Int? = null,
 
     @Column(name = "programming_exp")
     @NotNull
-    @Min(0, message = "The value must be between 1 and 5")
+    @Min(1, message = "The value must be between 1 and 5")
     @Max(5, message = "The value must be between 1 and 5")
     var programmingExp: Int? = null,
 
@@ -55,8 +59,4 @@ class SurveyResponse(
 
     @NotNull
     var timestamp: LocalDateTime = LocalDateTime.now(),
-
-    @ManyToOne(cascade = [CascadeType.PERSIST])  // TODO CascadeType
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    var user: User? = null,
 )

@@ -1,8 +1,12 @@
 package com.wafflestudio.seminar.domain.survey.api
 
+import com.wafflestudio.seminar.domain.os.service.OperatingSystemService
 import com.wafflestudio.seminar.domain.survey.dto.SurveyResponseDto
+import com.wafflestudio.seminar.domain.survey.model.SurveyResponse
 import com.wafflestudio.seminar.domain.survey.service.SurveyResponseService
+import com.wafflestudio.seminar.domain.user.service.UserService
 import org.modelmapper.ModelMapper
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
@@ -11,6 +15,8 @@ import javax.validation.Valid
 @RequestMapping("/api/v1/results")
 class SurveyResponseController(
     private val surveyResponseService: SurveyResponseService,
+    private val operatingSystemService: OperatingSystemService,
+    private val userService: UserService,
     private val modelMapper: ModelMapper
 ) {
     @GetMapping("/")  // TODO trailing slash??
@@ -33,10 +39,22 @@ class SurveyResponseController(
     fun addSurveyResponse(
         @ModelAttribute @Valid body: SurveyResponseDto.CreateRequest,
         @RequestHeader("User-Id") userId: Long
-    ): SurveyResponseDto.Response {
-        //TODO: API 생성
-//        val newSurveyResponse = modelMapper.map(body, SurveyResponse::class.java)
-        return SurveyResponseDto.Response()
+    ): ResponseEntity<SurveyResponseDto.Response> {
+        // TODO: API 생성
+        // TODO timestamp auto?
+        // TODO 어케 user랑 os를 집어넣지?
+
+        val newSurveyResponse = modelMapper.map(body, SurveyResponse::class.java)
+
+        // 임시
+        // TODO 이 로직을 처리하는 장소? (controller or service)
+        newSurveyResponse.os = operatingSystemService.getOperatingSystemByName(body.os)
+        newSurveyResponse.user = userService.getUserById(userId)
+
+        surveyResponseService.addSurveyResponse(newSurveyResponse)
+
+        val responseBody = modelMapper.map(newSurveyResponse, SurveyResponseDto.Response::class.java)
+        return ResponseEntity<SurveyResponseDto.Response>(responseBody, HttpStatus.CREATED)
     }
 
     @PatchMapping("/{id}/")

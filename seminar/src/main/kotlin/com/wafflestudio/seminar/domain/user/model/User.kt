@@ -12,11 +12,9 @@ class User(
     var id: Long? = null,
 
     @NotBlank
-    @NotNull
     var name: String? = null,
 
     @NotBlank
-    @NotNull
     @Email
     @Column(unique = true)
     var email: String? = null,
