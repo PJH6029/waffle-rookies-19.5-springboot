@@ -1,6 +1,7 @@
 package com.wafflestudio.seminar.domain.os.model
 
 import javax.persistence.*
+import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
@@ -16,6 +17,7 @@ class User(
 
     @NotBlank
     @NotNull
+    @Email
     @Column(unique = true)
     var email: String? = null,
 )

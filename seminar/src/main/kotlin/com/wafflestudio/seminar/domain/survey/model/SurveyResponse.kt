@@ -1,6 +1,7 @@
 package com.wafflestudio.seminar.domain.survey.model
 
 import com.wafflestudio.seminar.domain.os.model.OperatingSystem
+import com.wafflestudio.seminar.domain.os.model.User
 import java.time.LocalDateTime
 import javax.persistence.*
 import javax.validation.constraints.Max
@@ -54,4 +55,8 @@ class SurveyResponse(
 
     @NotNull
     var timestamp: LocalDateTime = LocalDateTime.now(),
+
+    @ManyToOne(cascade = [CascadeType.PERSIST])  // TODO CascadeType
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    var user: User? = null,
 )
