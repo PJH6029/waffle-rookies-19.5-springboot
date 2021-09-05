@@ -1,9 +1,6 @@
 package com.wafflestudio.seminar.domain.survey.api
 
 import com.wafflestudio.seminar.domain.survey.dto.SurveyResponseDto
-import com.wafflestudio.seminar.domain.os.exception.OsNotFoundException
-import com.wafflestudio.seminar.domain.survey.exception.SurveyNotFoundException
-import com.wafflestudio.seminar.domain.survey.model.SurveyResponse
 import com.wafflestudio.seminar.domain.survey.service.SurveyResponseService
 import org.modelmapper.ModelMapper
 import org.springframework.http.ResponseEntity
@@ -18,28 +15,18 @@ class SurveyResponseController(
 ) {
     @GetMapping("/")  // TODO trailing slash??
     fun getSurveyResponses(@RequestParam(required = false) os: String?): ResponseEntity<List<SurveyResponseDto.Response>> {
-        return try {
-            val surveyResponses =
-                if (os != null) surveyResponseService.getSurveyResponsesByOsName(os)
-                else surveyResponseService.getAllSurveyResponses()
-            val responseBody = surveyResponses.map { modelMapper.map(it, SurveyResponseDto.Response::class.java) }
-            ResponseEntity.ok(responseBody)
-        } catch (e: OsNotFoundException) {
-            ResponseEntity.notFound().build()
-        }
-        // AOP를 적용해 exception handling을 따로 하도록 고쳐보셔도 됩니다.
-        // TODO implement AOP for annotated(NotFoundException(exception)) method
+        val surveyResponses =
+            if (os != null) surveyResponseService.getSurveyResponsesByOsName(os)
+            else surveyResponseService.getAllSurveyResponses()
+        val responseBody = surveyResponses.map { modelMapper.map(it, SurveyResponseDto.Response::class.java) }
+        return ResponseEntity.ok(responseBody)
     }
 
     @GetMapping("/{id}/")
     fun getSurveyResponse(@PathVariable("id") id: Long): ResponseEntity<SurveyResponseDto.Response> {
-        return try {
-            val surveyResponse = surveyResponseService.getSurveyResponseById(id)
-            val responseBody = modelMapper.map(surveyResponse, SurveyResponseDto.Response::class.java)
-            ResponseEntity.ok(responseBody)
-        } catch (e: SurveyNotFoundException) {
-            ResponseEntity.notFound().build()
-        }
+        val surveyResponse = surveyResponseService.getSurveyResponseById(id)
+        val responseBody = modelMapper.map(surveyResponse, SurveyResponseDto.Response::class.java)
+        return ResponseEntity.ok(responseBody)
     }
 
     @PostMapping("/")

@@ -1,5 +1,6 @@
 package com.wafflestudio.seminar.domain.user.api
 
+import com.wafflestudio.seminar.common.dto.CommonDto
 import com.wafflestudio.seminar.domain.os.model.User
 import com.wafflestudio.seminar.domain.user.dto.UserDto
 import com.wafflestudio.seminar.domain.user.exception.UserNotFoundException
@@ -12,7 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.*
 import java.lang.StringBuilder
 
-@RestControllerAdvice
+@RestControllerAdvice(basePackageClasses = [UserController::class])
 class UserControllerAdvice {
 
     @ExceptionHandler(BindException::class)
@@ -42,13 +43,5 @@ class UserControllerAdvice {
     ): UserDto.ErrorResponse {
         // TODO get err msg from jdbc.spi.SqlExceptionHelper
         return UserDto.ErrorResponse(message = exception.message, status=HttpStatus.BAD_REQUEST.value())
-    }
-
-    @ExceptionHandler(UserNotFoundException::class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    fun processNotFoundException(
-        exception: UserNotFoundException
-    ): UserDto.ErrorResponse {
-        return UserDto.ErrorResponse(message = exception.message, status = HttpStatus.NOT_FOUND.value())
     }
 }

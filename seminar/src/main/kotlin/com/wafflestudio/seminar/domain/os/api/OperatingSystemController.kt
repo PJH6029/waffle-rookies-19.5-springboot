@@ -24,12 +24,8 @@ class OperatingSystemController(
 
     @GetMapping("/{id}/")
     fun getOperatingSystem(@PathVariable("id") id: Long): ResponseEntity<OperatingSystemDto.Response> {
-        return try {
-            val operatingSystem = operatingSystemService.getOperatingSystemById(id)
-            val responseBody = modelMapper.map(operatingSystem, OperatingSystemDto.Response::class.java)
-            ResponseEntity.ok(responseBody)
-        } catch (e: OsNotFoundException){
-            ResponseEntity.notFound().build()
-        }
+        val operatingSystem = operatingSystemService.getOperatingSystemById(id)
+        val responseBody = modelMapper.map(operatingSystem, OperatingSystemDto.Response::class.java)
+        return ResponseEntity.ok(responseBody)
     }
 }

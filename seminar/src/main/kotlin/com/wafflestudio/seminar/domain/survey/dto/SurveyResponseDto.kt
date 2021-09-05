@@ -25,6 +25,11 @@ class SurveyResponseDto {
         var timestamp: LocalDateTime? = null
     )
 
+    data class ErrorResponse(
+        var message: String? = "",
+        var status: Int? = null,
+    )
+
     // TODO: 아래 두 DTO 완성
     data class CreateRequest(
         @field:NotNull

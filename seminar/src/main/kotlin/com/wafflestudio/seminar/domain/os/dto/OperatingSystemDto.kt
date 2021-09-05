@@ -9,5 +9,4 @@ class OperatingSystemDto {
         var description: String = "",
         var price: Long? = null,
     )
-
 }
