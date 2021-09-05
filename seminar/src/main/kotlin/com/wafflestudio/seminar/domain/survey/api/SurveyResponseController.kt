@@ -16,7 +16,7 @@ class SurveyResponseController(
     private val surveyResponseService: SurveyResponseService,
     private val modelMapper: ModelMapper
 ) {
-    @GetMapping("/")
+    @GetMapping("/")  // TODO trailing slash??
     fun getSurveyResponses(@RequestParam(required = false) os: String?): ResponseEntity<List<SurveyResponseDto.Response>> {
         return try {
             val surveyResponses =
@@ -28,6 +28,7 @@ class SurveyResponseController(
             ResponseEntity.notFound().build()
         }
         // AOP를 적용해 exception handling을 따로 하도록 고쳐보셔도 됩니다.
+        // TODO implement AOP for annotated(NotFoundException(exception)) method
     }
 
     @GetMapping("/{id}/")
