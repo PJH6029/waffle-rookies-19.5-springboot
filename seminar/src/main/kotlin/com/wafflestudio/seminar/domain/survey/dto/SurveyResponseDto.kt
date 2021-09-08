@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull
 class SurveyResponseDto {
     data class Response(
         var id: Long? = 0,
-        var user: UserDto.Response? =null,
+        var user: UserDto.Response? =null,  // nested Dto
         var os: OperatingSystem? = null,
         var springExp: Int = 0,
         var rdbExp: Int = 0,
@@ -31,13 +31,11 @@ class SurveyResponseDto {
         var timestamp: LocalDateTime? = null
     )
 
-    // TODO: value로 parsable하지 않은 string이 들어간 경우? -> typeMismatch
     data class CreateRequest(
         @field:NotBlank
         var os: String? = "",
-        // var os: String = "",
 
-        // TODO customize property name
+        // customize property name -> json에선 가능
         @field:NotNull
         @field:Min(1, message = "The value must be between 1 and 5")
         @field:Max(5, message = "The value must be between 1 and 5")
@@ -48,12 +46,11 @@ class SurveyResponseDto {
         @field:Max(5, message = "The value must be between 1 and 5")
         var rdbExp: Int? = null,
 
-        @field:NotNull
-        @field:Min(1, message = "The value must be between 1 and 5")
-        @field:Max(5, message = "The value must be between 1 and 5")
+        @NotNull
+        @Min(1, message = "The value must be between 1 and 5")
+        @Max(5, message = "The value must be between 1 and 5")
         var programmingExp: Int? = null,
 
-        // TODO blank인데 db에 들어감??
         var major: String? = "",
         var grade: String? = "",
         var backendReason: String? = "",

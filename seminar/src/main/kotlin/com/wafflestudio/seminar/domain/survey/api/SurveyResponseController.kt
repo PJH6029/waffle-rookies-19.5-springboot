@@ -19,7 +19,7 @@ class SurveyResponseController(
     private val userService: UserService,
     private val modelMapper: ModelMapper
 ) {
-    @GetMapping("/")  // TODO trailing slash??
+    @GetMapping("/")  // trailing slash -> 일반적으로 이렇게 함
     fun getSurveyResponses(@RequestParam(required = false) os: String?): ResponseEntity<List<SurveyResponseDto.Response>> {
         val surveyResponses =
             if (os != null) surveyResponseService.getSurveyResponsesByOsName(os)
@@ -40,12 +40,8 @@ class SurveyResponseController(
         @ModelAttribute @Valid body: SurveyResponseDto.CreateRequest,
         @RequestHeader("User-Id") userId: Long
     ): ResponseEntity<SurveyResponseDto.Response> {
-        // TODO 어케 user랑 os를 집어넣지?
-
         val newSurveyResponse = modelMapper.map(body, SurveyResponse::class.java)
 
-        // 임시
-        // TODO 이 로직을 처리하는 장소? (controller or service)
         newSurveyResponse.os = operatingSystemService.getOperatingSystemByName(body.os!!)
         newSurveyResponse.user = userService.getUserById(userId)
 

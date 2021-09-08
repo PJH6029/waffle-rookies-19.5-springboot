@@ -20,24 +20,12 @@ class UserController(
     @PostMapping("/", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun addUser(
         @ModelAttribute @Valid body: UserDto.CreateRequest,
-        // bindingResult: BindingResult,
     ): ResponseEntity<UserDto.Response> {
-        // TODO Controller layer의 validation과 Service layer validation의 차이
-        /*
-        if (bindingResult.hasErrors()) {
-            val fieldErrors: List<String?> = bindingResult.fieldErrors.stream().map {it.defaultMessage}.collect(Collectors.toList())
-            fieldErrors.forEach {println(it)}
-            return ResponseEntity.badRequest().build()
-        } else {
-
-         */
         val newUser = modelMapper.map(body, User::class.java)
         userService.addUser(newUser)
 
         val responseBody = modelMapper.map(newUser, UserDto.Response::class.java)
-        // return ResponseEntity.ok(userService.saveUser(newUserResponse))
         return ResponseEntity<UserDto.Response>(responseBody, HttpStatus.CREATED)
-        //}
     }
 
     @GetMapping("/me")

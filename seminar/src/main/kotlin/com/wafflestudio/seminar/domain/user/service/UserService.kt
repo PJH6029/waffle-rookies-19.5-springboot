@@ -22,6 +22,7 @@ class UserService(
 
     fun deleteUserById(id: Long) {
         val user = this.getUserById(id)
+        // foreign key를 null로
         user.responses?.forEach {
             it.user = null
         }
