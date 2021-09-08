@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
+// Handle Exceptions on CommonControllerAdvice
 @RestController
 @RequestMapping("/api/v1/user")
 class UserController(
@@ -21,8 +22,6 @@ class UserController(
         @ModelAttribute @Valid body: UserDto.CreateRequest,
         // bindingResult: BindingResult,
     ): ResponseEntity<UserDto.Response> {
-        // TODO HttpMediaTypeNotSupported(or Accepted)Exception
-        // TODO input validation
         // TODO Controller layer의 validation과 Service layer validation의 차이
         /*
         if (bindingResult.hasErrors()) {
@@ -50,4 +49,13 @@ class UserController(
         return ResponseEntity.ok(responseBody)
     }
 
+
+    // user delete test용
+    @DeleteMapping("/{id}")
+    fun deleteUser(
+        @PathVariable("id") id: Long
+    ): ResponseEntity<String> {
+        userService.deleteUserById(id)
+        return ResponseEntity.ok().body("Delete Done")
+    }
 }

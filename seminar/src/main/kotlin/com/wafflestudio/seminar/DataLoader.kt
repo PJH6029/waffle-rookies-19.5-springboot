@@ -34,7 +34,7 @@ class DataLoader(
 
         val user1 = User(name = "testName1", email = "test@gmail.com")
         val user2 = User(name = "testName2", email = "test2@gmail.com")
-        val user3 = User(name = "testName3", email = "test3@gmail.com")
+        val user3 = User(name = "testName3", email = "duplicate@gmail.com")
         userRepository.save(user1)
         userRepository.save(user2)
         userRepository.save(user3)

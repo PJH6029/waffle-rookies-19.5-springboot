@@ -40,26 +40,18 @@ class SurveyResponseController(
         @ModelAttribute @Valid body: SurveyResponseDto.CreateRequest,
         @RequestHeader("User-Id") userId: Long
     ): ResponseEntity<SurveyResponseDto.Response> {
-        // TODO: API 생성
-        // TODO timestamp auto?
         // TODO 어케 user랑 os를 집어넣지?
 
         val newSurveyResponse = modelMapper.map(body, SurveyResponse::class.java)
 
         // 임시
         // TODO 이 로직을 처리하는 장소? (controller or service)
-        newSurveyResponse.os = operatingSystemService.getOperatingSystemByName(body.os)
+        newSurveyResponse.os = operatingSystemService.getOperatingSystemByName(body.os!!)
         newSurveyResponse.user = userService.getUserById(userId)
 
         surveyResponseService.addSurveyResponse(newSurveyResponse)
 
         val responseBody = modelMapper.map(newSurveyResponse, SurveyResponseDto.Response::class.java)
         return ResponseEntity<SurveyResponseDto.Response>(responseBody, HttpStatus.CREATED)
-    }
-
-    @PatchMapping("/{id}/")
-    fun modifySurveyResponseWithId(@ModelAttribute @Valid body: SurveyResponseDto.ModifyRequest): SurveyResponseDto.Response {
-        //TODO: API 생성
-        return SurveyResponseDto.Response()
     }
 }

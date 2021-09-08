@@ -16,7 +16,15 @@ class UserService(
         return userRepository.save(newUser)
     }
 
-    fun getUserById(id: Long): User? {
+    fun getUserById(id: Long): User {
         return userRepository.findByIdOrNull(id) ?: throw UserNotFoundException()
+    }
+
+    fun deleteUserById(id: Long) {
+        val user = this.getUserById(id)
+        user.responses?.forEach {
+            it.user = null
+        }
+        userRepository.deleteById(id)
     }
 }

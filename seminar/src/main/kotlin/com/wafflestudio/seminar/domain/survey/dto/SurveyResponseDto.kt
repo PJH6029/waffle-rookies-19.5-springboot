@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.wafflestudio.seminar.domain.os.dto.OperatingSystemDto
 import com.wafflestudio.seminar.domain.os.model.OperatingSystem
 import com.wafflestudio.seminar.domain.os.model.User
+import com.wafflestudio.seminar.domain.user.dto.UserDto
 import org.springframework.boot.context.properties.bind.Name
 import java.time.LocalDateTime
 import javax.persistence.Column
@@ -17,7 +18,7 @@ import javax.validation.constraints.NotNull
 class SurveyResponseDto {
     data class Response(
         var id: Long? = 0,
-        var user: User? =null,
+        var user: UserDto.Response? =null,
         var os: OperatingSystem? = null,
         var springExp: Int = 0,
         var rdbExp: Int = 0,
@@ -30,16 +31,11 @@ class SurveyResponseDto {
         var timestamp: LocalDateTime? = null
     )
 
-    data class ErrorResponse(
-        var message: String? = "",
-        var status: Int? = null,
-    )
-
     // TODO: value로 parsable하지 않은 string이 들어간 경우? -> typeMismatch
     data class CreateRequest(
         @field:NotBlank
-        // var os: String? = "",
-        var os: String = "",
+        var os: String? = "",
+        // var os: String = "",
 
         // TODO customize property name
         @field:NotNull

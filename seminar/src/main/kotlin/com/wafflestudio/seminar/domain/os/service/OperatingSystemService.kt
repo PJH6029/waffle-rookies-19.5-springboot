@@ -7,6 +7,7 @@ import com.wafflestudio.seminar.domain.os.repository.OperatingSystemRepository
 import org.modelmapper.ModelMapper
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import javax.persistence.NonUniqueResultException
 
 @Service
 class OperatingSystemService(
@@ -21,7 +22,12 @@ class OperatingSystemService(
     }
 
     fun getOperatingSystemByName(name: String): OperatingSystem {
-        // TODO duplicate os
-        return operatingSystemRepository.findByNameEquals(name) ?: throw OsNotFoundException()
+        try {
+            val os = operatingSystemRepository.findByNameEquals(name) ?: throw OsNotFoundException()
+            return os
+        } catch (e: NonUniqueResultException) {
+            // TODO duplicate os
+            throw OsNotFoundException()
+        }
     }
 }

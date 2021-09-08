@@ -7,6 +7,7 @@ import com.wafflestudio.seminar.domain.survey.model.SurveyResponse
 import com.wafflestudio.seminar.domain.survey.repository.SurveyResponseRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
+import javax.persistence.NonUniqueResultException
 
 @Service
 class SurveyResponseService(
@@ -18,8 +19,13 @@ class SurveyResponseService(
     }
 
     fun getSurveyResponsesByOsName(name: String): List<SurveyResponse> {
-        val os = operatingSystemRepository.findByNameEquals(name) ?: throw OsNotFoundException()
-        return surveyResponseRepository.findAllByOs(os)
+        try {
+            val os = operatingSystemRepository.findByNameEquals(name) ?: throw OsNotFoundException()
+            return surveyResponseRepository.findAllByOs(os)
+        } catch (e: NonUniqueResultException) {
+            // TODO duplicate os
+            throw OsNotFoundException()
+        }
     }
 
     fun getSurveyResponseById(id: Long): SurveyResponse? {
