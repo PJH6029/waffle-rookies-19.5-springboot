@@ -1,15 +1,9 @@
 package com.wafflestudio.seminar.domain.survey.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.wafflestudio.seminar.domain.os.dto.OperatingSystemDto
 import com.wafflestudio.seminar.domain.os.model.OperatingSystem
-import com.wafflestudio.seminar.domain.os.model.User
 import com.wafflestudio.seminar.domain.user.dto.UserDto
-import org.springframework.boot.context.properties.bind.Name
 import java.time.LocalDateTime
-import javax.persistence.Column
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
@@ -35,7 +29,6 @@ class SurveyResponseDto {
         @field:NotBlank
         var os: String? = "",
 
-        // customize property name -> json에선 가능
         @JsonProperty("spring_exp")
         @field:NotNull
         @field:Min(1, message = "The value must be between 1 and 5")

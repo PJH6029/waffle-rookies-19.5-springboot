@@ -2,8 +2,6 @@ package com.wafflestudio.seminar.validation.constraints
 
 import com.wafflestudio.seminar.domain.os.repository.UserRepository
 import org.springframework.stereotype.Component
-import java.lang.annotation.RetentionPolicy
-import java.text.MessageFormat
 import javax.validation.Constraint
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext

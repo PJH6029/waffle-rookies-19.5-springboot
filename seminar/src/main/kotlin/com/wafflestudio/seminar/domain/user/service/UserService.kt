@@ -3,10 +3,8 @@ package com.wafflestudio.seminar.domain.user.service
 import com.wafflestudio.seminar.domain.os.model.User
 import com.wafflestudio.seminar.domain.os.repository.UserRepository
 import com.wafflestudio.seminar.domain.user.exception.UserNotFoundException
-import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import java.sql.SQLIntegrityConstraintViolationException
 
 @Service
 class UserService(
@@ -21,11 +19,6 @@ class UserService(
     }
 
     fun deleteUserById(id: Long) {
-        val user = this.getUserById(id)
-        // foreign key를 null로
-        user.responses?.forEach {
-            it.user = null
-        }
         userRepository.deleteById(id)
     }
 }

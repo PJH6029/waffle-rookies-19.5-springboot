@@ -4,7 +4,6 @@ import com.wafflestudio.seminar.domain.survey.model.SurveyResponse
 import javax.persistence.*
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotNull
 
 @Entity
 class User(
@@ -22,4 +21,10 @@ class User(
 
     @OneToMany(mappedBy = "user")
     var responses: MutableSet<SurveyResponse>? = HashSet()
-)
+
+) {
+    @PreRemove
+    fun preRemove() {
+        responses?.forEach { it.user = null }
+    }
+}
