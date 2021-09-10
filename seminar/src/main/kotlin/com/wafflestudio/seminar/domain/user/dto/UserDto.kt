@@ -1,10 +1,8 @@
 package com.wafflestudio.seminar.domain.user.dto
 
-import org.springframework.http.HttpStatus
-import javax.persistence.Column
+import com.wafflestudio.seminar.validation.constraints.UniqueEmail
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotNull
 
 class UserDto {
     data class Response(
@@ -17,6 +15,7 @@ class UserDto {
        @field:NotBlank
        var name: String? = "",
 
+       @UniqueEmail
        @field:NotBlank
        @field:Email
        var email: String? = "",

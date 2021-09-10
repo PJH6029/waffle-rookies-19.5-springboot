@@ -17,9 +17,9 @@ class UserController(
     private val userService: UserService,
     private val modelMapper: ModelMapper
 ) {
-    @PostMapping("/", consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
+    @PostMapping("/")
     fun addUser(
-        @ModelAttribute @Valid body: UserDto.CreateRequest,
+        @RequestBody @Valid body: UserDto.CreateRequest,
     ): ResponseEntity<UserDto.Response> {
         val newUser = modelMapper.map(body, User::class.java)
         userService.addUser(newUser)

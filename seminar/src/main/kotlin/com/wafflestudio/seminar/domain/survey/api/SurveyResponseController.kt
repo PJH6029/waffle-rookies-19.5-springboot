@@ -37,7 +37,7 @@ class SurveyResponseController(
 
     @PostMapping("/")
     fun addSurveyResponse(
-        @ModelAttribute @Valid body: SurveyResponseDto.CreateRequest,
+        @RequestBody @Valid body: SurveyResponseDto.CreateRequest,
         @RequestHeader("User-Id") userId: Long
     ): ResponseEntity<SurveyResponseDto.Response> {
         val newSurveyResponse = modelMapper.map(body, SurveyResponse::class.java)

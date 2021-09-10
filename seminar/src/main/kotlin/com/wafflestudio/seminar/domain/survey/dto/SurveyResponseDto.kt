@@ -36,19 +36,22 @@ class SurveyResponseDto {
         var os: String? = "",
 
         // customize property name -> json에선 가능
+        @JsonProperty("spring_exp")
         @field:NotNull
         @field:Min(1, message = "The value must be between 1 and 5")
         @field:Max(5, message = "The value must be between 1 and 5")
         var springExp: Int? = null, // name이 같아야 mapping이 됨
 
+        @JsonProperty("rdb_exp")
         @field:NotNull
         @field:Min(1, message = "The value must be between 1 and 5")
         @field:Max(5, message = "The value must be between 1 and 5")
         var rdbExp: Int? = null,
 
-        @NotNull
-        @Min(1, message = "The value must be between 1 and 5")
-        @Max(5, message = "The value must be between 1 and 5")
+        @JsonProperty("programming_exp")
+        @field:NotNull
+        @field:Min(1, message = "The value must be between 1 and 5")
+        @field:Max(5, message = "The value must be between 1 and 5")
         var programmingExp: Int? = null,
 
         var major: String? = "",
