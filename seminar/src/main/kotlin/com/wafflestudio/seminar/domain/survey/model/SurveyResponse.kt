@@ -1,5 +1,6 @@
 package com.wafflestudio.seminar.domain.survey.model
 
+import com.wafflestudio.seminar.domain.model.BaseEntity
 import com.wafflestudio.seminar.domain.os.model.OperatingSystem
 import com.wafflestudio.seminar.domain.os.model.User
 import java.time.LocalDateTime
@@ -59,4 +60,4 @@ class SurveyResponse(
 
     @field:NotNull
     var timestamp: LocalDateTime = LocalDateTime.now(),
-)
+): BaseEntity()

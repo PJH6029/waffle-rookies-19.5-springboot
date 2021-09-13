@@ -1,5 +1,6 @@
 package com.wafflestudio.seminar.domain.os.model
 
+import com.wafflestudio.seminar.domain.model.BaseEntity
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
@@ -18,4 +19,4 @@ class OperatingSystem(
 
     @field:NotNull
     var price: Long? = null,
-)
+): BaseEntity()

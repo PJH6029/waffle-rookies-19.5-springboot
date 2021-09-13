@@ -16,7 +16,7 @@ import javax.validation.ConstraintViolationException
 @RestControllerAdvice
 class CommonControllerAdvice {
     // exceptions from Dto validation
-    @ExceptionHandler(MethodArgumentNotValidException::class)
+/*    @ExceptionHandler(MethodArgumentNotValidException::class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     fun processValidationException(
         exception: MethodArgumentNotValidException
@@ -33,7 +33,7 @@ class CommonControllerAdvice {
             stringBuilder.append(", ")
         }
         return CommonDto.ErrorResponse(message = stringBuilder.toString(), status = HttpStatus.BAD_REQUEST.value())
-    }
+    }*/
 
 
     // validation 단계에서 custom annotation을 통해 잡는게 맞는지, 여기서 잡는게 맞는지?? -> 둘 다!
