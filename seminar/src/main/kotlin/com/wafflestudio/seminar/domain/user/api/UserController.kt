@@ -27,7 +27,7 @@ class UserController(
         return ResponseEntity<UserDto.Response>(responseBody, HttpStatus.CREATED)
     }
 
-    @GetMapping("/me")
+    @GetMapping("/me/")
     fun getMyUser(
         @RequestHeader("User-Id") userId: Long
     ) : ResponseEntity<UserDto.Response> {
@@ -38,7 +38,7 @@ class UserController(
 
 
     // user delete test용
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/")
     fun deleteUser(
         @PathVariable("id") id: Long
     ): ResponseEntity<String> {
