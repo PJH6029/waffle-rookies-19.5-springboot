@@ -17,4 +17,4 @@
 - 이두현
   - Controller 단에서 DTO로 불러와 Entity로 매핑한 값을 함수 안에서 바꿔줘도 안전하다고 볼 수 있는지 궁금합니다.
     - Userid를 헤더로 받고 설문을 진행하는 과정을 implement하는 과정에서 생긴 고민입니다.
-  - 예외 처리를 try catch로 할 경우 가독성이 떨어질 수 있어서 ExceptionHandler 같은 것을 사용한다는 [글다을](https://jeong-pro.tistory.com/195) 보았는데 현업에서 어떤 방식을 선호하시는지 궁금합니다.
+  - 예외 처리를 try catch로 할 경우 가독성이 떨어질 수 있어서 ExceptionHandler 같은 것을 사용한다는 [글을](https://jeong-pro.tistory.com/195) 보았는데 현업에서 어떤 방식을 선호하시는지 궁금합니다.
