@@ -7,12 +7,13 @@ import java.time.LocalDateTime
 import javax.persistence.EntityListeners
 import javax.persistence.MappedSuperclass
 
-//@EntityListeners(AuditingEntityListener::class)
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener::class)
 open class BaseEntity(
+        // TODO why open var?
         @CreatedDate
-        var createdAt: LocalDateTime? = null,
+        open var createdAt: LocalDateTime? = null,
 
         @LastModifiedDate
-        var updatedAt: LocalDateTime? = null
+        open var updatedAt: LocalDateTime? = null
 )

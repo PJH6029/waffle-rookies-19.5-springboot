@@ -35,6 +35,8 @@ class SurveyResponseController(
         return ResponseEntity.ok(responseBody)
     }
 
+    // catches DTO validation exception on CommonControllerAdvice.processValidationException
+    // catches Entity validation exception on CommonControllerAdvice.processDBValidationException
     @PostMapping("/")
     fun addSurveyResponse(
         @RequestBody @Valid body: SurveyResponseDto.CreateRequest,
