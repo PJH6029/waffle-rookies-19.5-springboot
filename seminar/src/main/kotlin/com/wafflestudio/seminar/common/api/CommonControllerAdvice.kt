@@ -7,6 +7,7 @@ import com.wafflestudio.seminar.common.exception.WaffleNotFoundException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.MethodArgumentNotValidException
+import org.springframework.web.bind.MissingRequestHeaderException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -15,7 +16,7 @@ import javax.validation.ConstraintViolationException
 
 @RestControllerAdvice
 class CommonControllerAdvice {
-    // exceptions from Dto validation
+    // exception from Dto validation
     @ExceptionHandler(MethodArgumentNotValidException::class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     fun processValidationException(
@@ -35,6 +36,17 @@ class CommonControllerAdvice {
         return CommonDto.ErrorResponse(message = stringBuilder.toString(), status = HttpStatus.BAD_REQUEST.value())
     }
 
+    // exception from required request header
+    @ExceptionHandler(MissingRequestHeaderException::class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    fun processMissingRequestHeaderException(
+        exception: MissingRequestHeaderException
+    ): CommonDto.ErrorResponse {
+        println("DEBUG: called processMissingRequestHeaderException")
+        println("DEBUG: Caught $exception")
+
+        return CommonDto.ErrorResponse(message = exception.message, status=HttpStatus.BAD_REQUEST.value())
+    }
 
     // validation 단계에서 custom annotation을 통해 잡는게 맞는지, 여기서 잡는게 맞는지?? -> 둘 다!
     // exceptions from db validation
