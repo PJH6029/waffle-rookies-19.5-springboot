@@ -3,7 +3,12 @@ package com.wafflestudio.seminar.domain.survey.dto
 import com.wafflestudio.seminar.domain.os.dto.OperatingSystemDto
 import com.wafflestudio.seminar.domain.survey.model.SurveyResponse
 import com.wafflestudio.seminar.domain.user.dto.UserDto
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.wafflestudio.seminar.domain.os.model.OperatingSystem
+import com.wafflestudio.seminar.domain.user.dto.UserDto
 import java.time.LocalDateTime
+import javax.validation.constraints.Max
+import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
@@ -40,16 +45,26 @@ class SurveyResponseDto {
 
     data class CreateRequest(
         @field:NotBlank
-        val os: String,
+        var os: String = "",
 
+        @JsonProperty("spring_exp")
         @field:NotNull
-        val springExp: Int,
+        @field:Min(1, message = "The value must be between 1 and 5")
+        @field:Max(5, message = "The value must be between 1 and 5")
+        var springExp: Int,
 
+        @JsonProperty("rdb_exp")
         @field:NotNull
-        val rdbExp: Int,
+        @field:Min(1, message = "The value must be between 1 and 5")
+        @field:Max(5, message = "The value must be between 1 and 5")
+        var rdbExp: Int,
 
+        @JsonProperty("programming_exp")
         @field:NotNull
-        val programmingExp: Int,
+        @field:Min(1, message = "The value must be between 1 and 5")
+        @field:Max(5, message = "The value must be between 1 and 5")
+        var programmingExp: Int? = null,
+
 
         @field:NotBlank
         val major: String,

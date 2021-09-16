@@ -1,8 +1,10 @@
 package com.wafflestudio.seminar.domain.os.service
 
+import com.wafflestudio.seminar.domain.os.exception.DuplicateOsException
 import com.wafflestudio.seminar.domain.os.exception.OsNotFoundException
 import com.wafflestudio.seminar.domain.os.model.OperatingSystem
 import com.wafflestudio.seminar.domain.os.repository.OperatingSystemRepository
+import org.springframework.dao.IncorrectResultSizeDataAccessException
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
@@ -16,5 +18,13 @@ class OperatingSystemService(
 
     fun getOperatingSystemById(id: Long): OperatingSystem {
         return operatingSystemRepository.findByIdOrNull(id) ?: throw OsNotFoundException()
+    }
+
+    fun getOperatingSystemByName(name: String): OperatingSystem {
+        try {
+            return operatingSystemRepository.findByNameEquals(name) ?: throw OsNotFoundException()
+        } catch (e: IncorrectResultSizeDataAccessException) {
+            throw DuplicateOsException()
+        }
     }
 }

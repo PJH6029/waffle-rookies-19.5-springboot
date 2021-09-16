@@ -1,5 +1,6 @@
 package com.wafflestudio.seminar.domain.survey.api
 
+import com.wafflestudio.seminar.domain.os.service.OperatingSystemService
 import com.wafflestudio.seminar.domain.survey.dto.SurveyResponseDto
 import com.wafflestudio.seminar.domain.survey.service.SurveyResponseService
 import com.wafflestudio.seminar.domain.user.model.User
@@ -28,6 +29,8 @@ class SurveyResponseController(
         return SurveyResponseDto.Response(surveyResponse)
     }
 
+    // catches DTO validation exception on CommonControllerAdvice.processValidationException
+    // catches Entity validation exception on CommonControllerAdvice.processDBValidationException
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     fun addSurveyResponse(

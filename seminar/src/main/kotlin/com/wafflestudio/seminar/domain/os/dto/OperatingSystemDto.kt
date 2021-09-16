@@ -1,7 +1,6 @@
 package com.wafflestudio.seminar.domain.os.dto
 
 import com.wafflestudio.seminar.domain.os.model.OperatingSystem
-import javax.validation.constraints.Min
 
 class OperatingSystemDto {
     data class Response(

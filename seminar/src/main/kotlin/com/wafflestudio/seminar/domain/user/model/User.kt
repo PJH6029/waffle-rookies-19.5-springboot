@@ -22,4 +22,10 @@ class User(
     @field:NotNull
     val roles: String = "",
 
-    ) : BaseEntity()
+    ) : BaseEntity() {
+    @PreRemove
+    fun preRemove() {
+        responses?.forEach { it.user = null }
+    }
+}
+

@@ -1,6 +1,8 @@
 package com.wafflestudio.seminar.domain.user.dto
 
 import com.wafflestudio.seminar.domain.user.model.User
+import com.wafflestudio.seminar.validation.constraints.UniqueEmail
+import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 
 class UserDto {
@@ -17,7 +19,9 @@ class UserDto {
     }
 
     data class SignupRequest(
+        @UniqueEmail
         @field:NotBlank
+        @field:Email
         val email: String,
         @field:NotBlank
         val name: String,
