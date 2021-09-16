@@ -1,6 +1,7 @@
 package com.wafflestudio.seminar.domain.user.model
 
 import com.wafflestudio.seminar.domain.model.BaseEntity
+import com.wafflestudio.seminar.domain.survey.model.SurveyResponse
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
@@ -18,6 +19,9 @@ class User(
     @field:NotBlank
     val password: String,
 
+    @OneToMany(cascade = [CascadeType.PERSIST], mappedBy = "user")
+    val surveyResponses: MutableSet<SurveyResponse>? = mutableSetOf(),
+
     @Column
     @field:NotNull
     val roles: String = "",
@@ -25,7 +29,7 @@ class User(
     ) : BaseEntity() {
     @PreRemove
     fun preRemove() {
-        responses?.forEach { it.user = null }
+        surveyResponses?.forEach { it.user = null }
     }
 }
 

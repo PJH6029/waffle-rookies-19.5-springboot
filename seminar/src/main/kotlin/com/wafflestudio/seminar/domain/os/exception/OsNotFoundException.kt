@@ -2,7 +2,6 @@ package com.wafflestudio.seminar.domain.os.exception
 
 import com.wafflestudio.seminar.global.common.exception.DataNotFoundException
 import com.wafflestudio.seminar.global.common.exception.ErrorType
-import com.wafflestudio.seminar.global.common.exception.WaffleException
 
-class OsNotFoundException(detail: String="") :
+class OsNotFoundException(detail: String="OS not found") :
     DataNotFoundException(ErrorType.OS_NOT_FOUND, detail)

@@ -2,7 +2,6 @@ package com.wafflestudio.seminar.domain.survey.dto
 
 import com.wafflestudio.seminar.domain.os.dto.OperatingSystemDto
 import com.wafflestudio.seminar.domain.survey.model.SurveyResponse
-import com.wafflestudio.seminar.domain.user.dto.UserDto
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.wafflestudio.seminar.domain.os.model.OperatingSystem
 import com.wafflestudio.seminar.domain.user.dto.UserDto
@@ -63,8 +62,7 @@ class SurveyResponseDto {
         @field:NotNull
         @field:Min(1, message = "The value must be between 1 and 5")
         @field:Max(5, message = "The value must be between 1 and 5")
-        var programmingExp: Int? = null,
-
+        var programmingExp: Int,
 
         @field:NotBlank
         val major: String,

@@ -1,5 +1,5 @@
 package com.wafflestudio.seminar.global.common.exception
-
+/*
 import com.wafflestudio.seminar.common.dto.CommonDto
 import com.wafflestudio.seminar.common.exception.WaffleDuplicateException
 import com.wafflestudio.seminar.common.exception.WaffleNotFoundException
@@ -20,7 +20,7 @@ class CommonControllerAdvice {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     fun processValidationException(
         exception: MethodArgumentNotValidException
-    ): CommonDto.ErrorResponse{
+    ): ErrorResponse {
         println("DEBUG: called processValidationException")
         println("DEBUG: Caught $exception")
         val bindingResult = exception.bindingResult
@@ -32,7 +32,8 @@ class CommonControllerAdvice {
             stringBuilder.append(fieldError.defaultMessage)
             stringBuilder.append(", ")
         }
-        return CommonDto.ErrorResponse(message = stringBuilder.toString(), status = HttpStatus.BAD_REQUEST.value())
+        return ErrorResponse(HttpStatus.BAD_REQUEST.value(), ErrorType.)
+        return ErrorResponse(errorMessage = stringBuilder.toString(), statusCode = HttpStatus.BAD_REQUEST.value(), errorCode = ErrorType.INVALID_REQUEST.code)
     }
 
     // exception from required request header
@@ -72,4 +73,4 @@ class CommonControllerAdvice {
         println("DEBUG: Caught $exception")
         return CommonDto.ErrorResponse(message = exception.message, status = HttpStatus.NOT_FOUND.value())
     }
-}
+}*/

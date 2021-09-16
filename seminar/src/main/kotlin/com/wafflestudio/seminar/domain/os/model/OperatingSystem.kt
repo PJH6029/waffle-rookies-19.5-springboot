@@ -18,6 +18,6 @@ class OperatingSystem(
     @field:NotNull
     val price: Long,
 
-    @OneToMany(cascade = [CascadeType.ALL],mappedBy = "os")
-    val surveyResponses : List<SurveyResponse> = listOf()
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "os")
+    val surveyResponses : MutableSet<SurveyResponse> = mutableSetOf()
 ) : BaseEntity()

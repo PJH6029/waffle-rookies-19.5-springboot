@@ -8,3 +8,5 @@ abstract class InvalidRequestException(errorType: ErrorType, detail: String = ""
 abstract class DataNotFoundException(errorType: ErrorType, detail: String = "") : WaffleException(errorType, detail)
 abstract class NotAllowedException(errorType: ErrorType, detail: String = "") : WaffleException(errorType, detail)
 abstract class ConflictException(errorType: ErrorType, detail: String = "") : WaffleException(errorType, detail)
+
+abstract class DuplicateDataException(errorType: ErrorType, detail: String = ""): WaffleException(errorType, detail)

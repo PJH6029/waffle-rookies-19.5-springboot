@@ -1,11 +1,11 @@
 package com.wafflestudio.seminar
 
 import com.wafflestudio.seminar.domain.os.model.OperatingSystem
-import com.wafflestudio.seminar.domain.os.model.User
 import com.wafflestudio.seminar.domain.os.repository.OperatingSystemRepository
-import com.wafflestudio.seminar.domain.os.repository.UserRepository
 import com.wafflestudio.seminar.domain.survey.model.SurveyResponse
 import com.wafflestudio.seminar.domain.survey.repository.SurveyResponseRepository
+import com.wafflestudio.seminar.domain.user.model.User
+import com.wafflestudio.seminar.domain.user.repository.UserRepository
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.core.io.ClassPathResource
@@ -33,9 +33,9 @@ class DataLoader(
         operatingSystemRepository.save(macos)
         operatingSystemRepository.save(linux)
 
-        val user1 = User(name = "testName1", email = "test@gmail.com")
-        val user2 = User(name = "testName2", email = "test2@gmail.com")
-        val user3 = User(name = "testName3", email = "duplicate@gmail.com")
+        val user1 = User(name = "testName1", email = "test@gmail.com", password = "somepassword")
+        val user2 = User(name = "testName2", email = "test2@gmail.com", password = "somepassword")
+        val user3 = User(name = "testName3", email = "duplicate@gmail.com", password = "somepassword")
         userRepository.save(user1)
         userRepository.save(user2)
         userRepository.save(user3)

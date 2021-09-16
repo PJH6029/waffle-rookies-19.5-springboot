@@ -20,23 +20,24 @@ class SurveyResponse(
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = true)
-    val user: User?,
+    // TODO SET NULL 때문에 var로 일단은 바꿔놓음
+    var user: User?,
 
     @Column(name = "spring_exp")
     @field:NotNull
-    @field:Min(0, message = "The value must be between 1 and 5")
+    @field:Min(1, message = "The value must be between 1 and 5")
     @field:Max(5, message = "The value must be between 1 and 5")
     val springExp: Int,
 
     @Column(name = "rdb_exp")
     @field:NotNull
-    @field:Min(0, message = "The value must be between 1 and 5")
+    @field:Min(1, message = "The value must be between 1 and 5")
     @field:Max(5, message = "The value must be between 1 and 5")
     val rdbExp: Int,
 
     @Column(name = "programming_exp")
     @field:NotNull
-    @field:Min(0, message = "The value must be between 1 and 5")
+    @field:Min(1, message = "The value must be between 1 and 5")
     @field:Max(5, message = "The value must be between 1 and 5")
     val programmingExp: Int,
 
