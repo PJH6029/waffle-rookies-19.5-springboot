@@ -3,13 +3,19 @@ package com.wafflestudio.seminar.global.common.exception
 enum class ErrorType (
     val code: Int
 ) {
-    INVALID_REQUEST(0),
+    INVALID_REQUEST(1000),
+    ALREADY_PARTICIPANT(1001),
+    ALREADY_INSTRUCTOR(1002),
 
     NOT_ALLOWED(3000),
 
     DATA_NOT_FOUND(4000),
     SURVEY_RESPONSE_NOT_FOUND(4001),
     OS_NOT_FOUND(4002),
+    USER_NOT_FOUND(4003),
+    PROFILE_NOT_FOUND(4004),
+    SEMINAR_NOT_FOUND(4005),
+    SEMINAR_PARTICIPANT_NOT_FOUND(4006),
 
     DUPLICATE_DATA(4010),
     DUPLICATE_SURVEY_RESPONSE(4011),
@@ -17,6 +23,7 @@ enum class ErrorType (
 
     CONFLICT(9000),
     USER_ALREADY_EXISTS(9001),
+
 
     SERVER_ERROR(10000)
 }

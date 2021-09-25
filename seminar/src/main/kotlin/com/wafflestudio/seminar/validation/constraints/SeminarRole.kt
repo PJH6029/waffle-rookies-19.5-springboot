@@ -4,12 +4,11 @@ import javax.validation.Constraint
 import javax.validation.Payload
 import kotlin.reflect.KClass
 
-@Constraint(validatedBy = [UniqueEmailValidator::class])
+@Constraint(validatedBy = [SeminarRoleValidator::class])
 @Target(AnnotationTarget.FIELD)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class UniqueEmail (
-    val message: String = "Email should be unique",
+annotation class SeminarRole (
+    val message: String = "Role should be either participant or instructor",
     val groups: Array<KClass<*>> = [],
     val payload: Array<KClass<out Payload>> = []
 )
-

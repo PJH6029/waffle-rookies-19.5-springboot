@@ -1,6 +1,5 @@
 package com.wafflestudio.seminar.domain.survey.api
 
-import com.wafflestudio.seminar.domain.os.service.OperatingSystemService
 import com.wafflestudio.seminar.domain.survey.dto.SurveyResponseDto
 import com.wafflestudio.seminar.domain.survey.service.SurveyResponseService
 import com.wafflestudio.seminar.domain.user.model.User

@@ -3,7 +3,6 @@ package com.wafflestudio.seminar.domain.survey.dto
 import com.wafflestudio.seminar.domain.os.dto.OperatingSystemDto
 import com.wafflestudio.seminar.domain.survey.model.SurveyResponse
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.wafflestudio.seminar.domain.os.model.OperatingSystem
 import com.wafflestudio.seminar.domain.user.dto.UserDto
 import java.time.LocalDateTime
 import javax.validation.constraints.Max
@@ -65,10 +64,10 @@ class SurveyResponseDto {
         var programmingExp: Int,
 
         @field:NotBlank
-        val major: String,
+        val major: String = "",
 
         @field:NotBlank
-        val grade: String,
+        val grade: String = "",
 
         val backendReason: String? = null,
         val waffleReason: String? = null,
