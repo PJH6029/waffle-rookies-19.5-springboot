@@ -45,6 +45,7 @@ class SeminarController(
             val instructorProfile = seminarService.authorizeUnchargedInstructor(user)  // instructor 자격이 있고, 맡고 있는 세미나가 없음
             seminarService.joinAsInstructor(instructorProfile, seminar)
         }
+        // TODO instructor / participant 등록이 안됨
         return SeminarDto.Response(seminar)
     }
 

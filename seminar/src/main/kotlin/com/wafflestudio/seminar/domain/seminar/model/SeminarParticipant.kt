@@ -8,11 +8,11 @@ import javax.persistence.*
 
 @Entity
 class SeminarParticipant(
-    @ManyToOne(cascade = [CascadeType.ALL])
+    @ManyToOne
     @JoinColumn(name = "participant_profile_id", referencedColumnName = "id")
     val participantProfile: ParticipantProfile,
 
-    @ManyToOne(cascade = [CascadeType.ALL])  // TODO cascade test
+    @ManyToOne  // TODO cascade test
     @JoinColumn(name = "seminar_id", referencedColumnName = "id")
     val seminar: Seminar,
 

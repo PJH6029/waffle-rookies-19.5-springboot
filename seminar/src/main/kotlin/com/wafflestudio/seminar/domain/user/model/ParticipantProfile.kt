@@ -20,12 +20,12 @@ class ParticipantProfile (
     @field:NotNull
     val accepted: Boolean,
 
-    @OneToMany(mappedBy = "participantProfile")
+    @OneToMany(mappedBy = "participantProfile", fetch = FetchType.EAGER)
     val seminarParticipants: MutableSet<SeminarParticipant> = mutableSetOf(),
 
 ) : BaseTimeEntity() {
     fun updatedBy(updateRequest: UserDto.UpdateRequest): ParticipantProfile {
-        this.university = updateRequest.university
+        this.university = updateRequest.university?: this.university
         return this
     }
 }

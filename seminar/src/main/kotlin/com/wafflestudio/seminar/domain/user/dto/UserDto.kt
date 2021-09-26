@@ -16,7 +16,7 @@ class UserDto {
         val id: Long,
         val name: String,
         val email: String,
-        @JsonProperty("data_joined")
+        @JsonProperty("date_joined")
         val dateJoined: LocalDateTime?,
         @JsonProperty("participant_profile")
         val participantProfile: ParticipantProfileDto.UserInfoResponse?,
@@ -57,6 +57,11 @@ class UserDto {
         val company: String = "",
         @field:Positive
         val year: Int? = null,
+    )
+
+    data class SigninRequest(
+        val email: String,
+        val password: String,
     )
 
     // TODO signup과 통합할 수 없을까?

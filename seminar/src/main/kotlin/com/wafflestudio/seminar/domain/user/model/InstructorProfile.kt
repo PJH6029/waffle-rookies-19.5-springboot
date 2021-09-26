@@ -21,7 +21,7 @@ class InstructorProfile(
     @field:Positive
     var year: Int? = null,
 
-    @ManyToOne(cascade = [CascadeType.ALL])
+    @ManyToOne
     @JoinColumn(name = "seminar_id", referencedColumnName = "id")
     var seminar: Seminar? = null, // TODO var?
 

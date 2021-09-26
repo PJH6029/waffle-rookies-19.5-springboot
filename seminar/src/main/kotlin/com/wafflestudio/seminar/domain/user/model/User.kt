@@ -26,7 +26,6 @@ class User(
     @OneToMany(cascade = [CascadeType.PERSIST], mappedBy = "user")
     val surveyResponses: MutableSet<SurveyResponse> = mutableSetOf(),
 
-    @Column
     @field:NotNull
     val roles: String = "",
 

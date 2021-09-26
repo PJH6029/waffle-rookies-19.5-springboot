@@ -6,10 +6,13 @@ import com.wafflestudio.seminar.domain.user.service.UserService
 import com.wafflestudio.seminar.domain.user.dto.UserDto
 import com.wafflestudio.seminar.global.auth.CurrentUser
 import com.wafflestudio.seminar.global.auth.JwtTokenProvider
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
+import kotlin.math.sign
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -17,15 +20,22 @@ class UserController(
     private val userService: UserService,
     private val jwtTokenProvider: JwtTokenProvider
 ) {
-    // TODO signin endpoint 여기로 옮기기
-
     @PostMapping("/")
     fun signup(@Valid @RequestBody signupRequest: UserDto.SignupRequest): ResponseEntity<UserDto.Response> {
         val user = userService.signup(signupRequest)
-        return ResponseEntity.noContent().header("Authentication", jwtTokenProvider.generateToken(user.email)).build()
+        val headers: HttpHeaders = HttpHeaders()
+        headers.set("Authentication", jwtTokenProvider.generateToken(user.email))
+        return ResponseEntity<UserDto.Response>(UserDto.Response(user), headers, HttpStatus.CREATED)
+    }
+
+    @PostMapping("/signin/")
+    fun signin(@Valid @RequestBody signinRequest: UserDto.SigninRequest): ResponseEntity<UserDto.Response> {
+        val user = userService.signin(signinRequest)
+        return ResponseEntity<UserDto.Response>(UserDto.Response(user), HttpStatus.OK)
     }
 
     @GetMapping("/me/")
+    @Transactional
     fun getCurrentUser(@CurrentUser user: User): UserDto.Response {
         return UserDto.Response(user)
     }

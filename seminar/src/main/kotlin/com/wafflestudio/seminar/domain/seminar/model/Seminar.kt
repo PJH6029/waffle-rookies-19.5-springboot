@@ -9,22 +9,22 @@ import javax.validation.constraints.*
 @Entity
 class Seminar(
     @field:NotBlank
-    val name: String,
+    var name: String,
 
     @field:NotNull
     @field:Positive
-    val capacity: Int,
+    var capacity: Int,
 
     @field:NotNull
     @field:Positive
-    val count: Int,
+    var count: Int,
 
     @field:NotBlank
     @field:Pattern(regexp = "^([1-9]|[01][0-9]|2[0-3]):([0-5][0-9])$")
-    val time: String,
+    var time: String,
 
     @field:NotNull
-    val online: Boolean,
+    var online: Boolean,
 
     @OneToMany(mappedBy = "seminar")
     val instructors: MutableSet<InstructorProfile> = mutableSetOf(),
@@ -33,14 +33,11 @@ class Seminar(
     val seminarParticipants: MutableSet<SeminarParticipant> = mutableSetOf()
 ) : BaseTimeEntity() {
     fun updatedBy(updateRequest: SeminarDto.UpdateRequest): Seminar {
-        return updateRequest.let {
-            Seminar(
-                it.name ?: this.name,
-                it.capacity ?: this.capacity,
-                it.count ?: this.count,
-                it.time ?: this.time,
-                it.online ?: this.online
-            )
-        }
+        this.name = updateRequest.name ?: this.name
+        this.capacity = updateRequest.capacity ?: this.capacity
+        this.count = updateRequest.count ?: this.count
+        this.time = updateRequest.time ?: this.time
+        this.online = updateRequest.online ?: this.online
+        return this
     }
 }

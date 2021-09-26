@@ -59,14 +59,12 @@ class SeminarService(
                 it.online
             )
         }
+        val savedSeminar = seminarRepository.save(newSeminar)
 
-        if (instructorProfile.seminar != null) {
-            throw AlreadyInstructorException()
-        }
         instructorProfile.seminar = newSeminar
         instructorProfileRepository.save(instructorProfile)
 
-        return seminarRepository.save(newSeminar)
+        return savedSeminar
     }
 
 
@@ -104,7 +102,7 @@ class SeminarService(
     fun authorizeUnchargedInstructor(user: User): InstructorProfile {
         val instructorProfile = user.instructorProfile ?: throw NotAllowedUserException("You're not an instructor")
         if (instructorProfile.seminar != null) {
-            throw AlreadyInstructorException()
+            throw AlreadyInstructorException("You're already an instructor of another seminar")
         }
         return instructorProfile
     }
@@ -123,7 +121,7 @@ class SeminarService(
 
     fun authorizeInstructorOfSeminar(user: User, seminar: Seminar): InstructorProfile {
         val instructorProfile = authorizeInstructor(user)
-        if (instructorProfile !in seminar.instructors) {
+        if (instructorProfile.id !in seminar.instructors.map{it.id}) {
             throw NotAllowedUserException("You're not in charge of this seminar")
         }
         return instructorProfile
@@ -143,7 +141,7 @@ class SeminarService(
     }
 
     fun checkInstructorOfSeminar(instructorProfile: InstructorProfile, seminar: Seminar): Boolean {
-        if (instructorProfile in seminar.instructors) {
+        if (instructorProfile.id in seminar.instructors.map{it.id}) {
             return true
         }
         return false

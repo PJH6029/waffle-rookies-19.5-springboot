@@ -101,7 +101,7 @@ class SeminarDto {
         // TODO time format
         @field:NotBlank
         @field:Pattern(regexp = "^([1-9]|[01][0-9]|2[0-3]):([0-5][0-9])$")
-        val time: String = "00:00",
+        val time: String = "",
 
         // 알아서 parsing 해줌
         val online: Boolean = true

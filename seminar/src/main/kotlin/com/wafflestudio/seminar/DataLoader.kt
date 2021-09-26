@@ -2,6 +2,8 @@ package com.wafflestudio.seminar
 
 import com.wafflestudio.seminar.domain.os.model.OperatingSystem
 import com.wafflestudio.seminar.domain.os.repository.OperatingSystemRepository
+import com.wafflestudio.seminar.domain.seminar.dto.SeminarDto
+import com.wafflestudio.seminar.domain.seminar.service.SeminarService
 import com.wafflestudio.seminar.domain.survey.model.SurveyResponse
 import com.wafflestudio.seminar.domain.survey.repository.SurveyResponseRepository
 import com.wafflestudio.seminar.domain.user.dto.UserDto
@@ -23,6 +25,7 @@ class DataLoader(
     private val operatingSystemRepository: OperatingSystemRepository,
     private val surveyResponseRepository: SurveyResponseRepository,
     private val userService: UserService,
+    private val seminarService: SeminarService,
 ) : ApplicationRunner {
     // 어플리케이션 동작 시 실행
     override fun run(args: ApplicationArguments) {
@@ -41,32 +44,42 @@ class DataLoader(
         userRepository.save(user1)
         userRepository.save(user2)
         userRepository.save(user3)*/
-        userService.signup(
+        val instructorUser1 = userService.signup(
             UserDto.SignupRequest(
                 "instructor@gmail.com",
-                "name1",
+                "instructorName1",
                 "somepassword",
                 "instructor"
             )
         )
 
-        userService.signup(
+        val instructorUser2 = userService.signup(
+            UserDto.SignupRequest(
+                "instructor2@gmail.com",
+                "instructorName2",
+                "somepassword",
+                "instructor"
+            )
+        )
+
+        val participantUser1 = userService.signup(
             UserDto.SignupRequest(
                 "participant@gmail.com",
-                "name2",
+                "participantName1",
                 "somepassword",
                 "participant"
             )
         )
 
-        userService.signup(
+        val participantUser2 = userService.signup(
             UserDto.SignupRequest(
-                "duplicate@gmail.com",
-                "name3",
+                "participant2@gmail.com",
+                "participantName2",
                 "somepassword",
                 "participant"
             )
         )
+
 
         BufferedReader(FileReader(ClassPathResource("data/example_surveyresult.tsv").file)).use { br ->
             br.lines().forEach {
