@@ -37,11 +37,11 @@
 - [x] 성공적 추가, 201
 - [x] participant가 요청, 403
 - [x] 이미 다른 seminar의 instructor가 요청, 403
-- [ ] instructor update가 안되는 문제
+- [x] instructor update가 안되는 문제
 #### PUT /api/v1/seminars/{seminar_id}/
 - [ ] 빈 body 무시 -> 무시
 - [x] 성공적 수정
-- [ ] capacity 작은 값, 400 (is_active도 고려)
+- [x] capacity 작은 값, 400 (is_active도 고려)
 - [x] invalid seminar id, 404
 - [x] partcipant가 요청, 403
 - [x] 담당자가 아닌 instructor가 요청, 403

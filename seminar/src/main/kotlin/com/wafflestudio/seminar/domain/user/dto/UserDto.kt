@@ -66,10 +66,6 @@ class UserDto {
 
     // TODO signup과 통합할 수 없을까?
     data class UpdateRequest(
-        // TODO 정보가 빠짐없이 들어오는 것인지, 바꾸고자 하는 정보만 들어오는 것인지?
-        // TODO 일단은 전자로 구현
-        // TODO 0글자 처리?
-
         // for participant
         val university: String = "",
 
