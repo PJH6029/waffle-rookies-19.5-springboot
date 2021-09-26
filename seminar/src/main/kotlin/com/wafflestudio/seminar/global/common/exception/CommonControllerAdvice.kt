@@ -1,6 +1,7 @@
 package com.wafflestudio.seminar.global.common.exception
 
 
+import org.slf4j.LoggerFactory
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -14,14 +15,14 @@ import javax.validation.ConstraintViolationException
 
 @RestControllerAdvice
 class CommonControllerAdvice {
+    private val logger = LoggerFactory.getLogger(this.javaClass.name)
+
     // exception from Dto validation
     @ExceptionHandler(MethodArgumentNotValidException::class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     fun processValidationException(
         exception: MethodArgumentNotValidException
     ): ErrorResponse {
-        println("DEBUG: called processValidationException")
-        println("DEBUG: Caught $exception")
         val bindingResult = exception.bindingResult
         val stringBuilder = StringBuilder()
 
@@ -31,6 +32,7 @@ class CommonControllerAdvice {
             stringBuilder.append(fieldError.defaultMessage)
             stringBuilder.append(", ")
         }
+        logger.error(stringBuilder.toString())
         return ErrorResponse(ErrorType.INVALID_REQUEST.code, stringBuilder.toString())
     }
 
@@ -40,9 +42,7 @@ class CommonControllerAdvice {
     fun processMissingRequestHeaderException(
         exception: MissingRequestHeaderException
     ): ErrorResponse {
-        println("DEBUG: called processMissingRequestHeaderException")
-        println("DEBUG: Caught $exception")
-
+        logger.error("Missing required request headers. " + exception.message)
         return ErrorResponse(ErrorType.INVALID_REQUEST.code, exception.message)
     }
 
@@ -54,21 +54,8 @@ class CommonControllerAdvice {
     fun processDBValidationException(
         exception: Exception
     ): ErrorResponse {
-        println("DEBUG: called processDBValidationException")
-        println("DEBUG: Caught $exception")
+        logger.error("DB validation. " + exception.message)
         // get err msg from jdbc.spi.SqlExceptionHelper -> exception.mostSpecificCause
         return ErrorResponse(ErrorType.INVALID_REQUEST.code, exception.message ?: "")
-    }
-
-
-    // notfound, duplicate exceptions
-    @ExceptionHandler(DataNotFoundException::class, DuplicateDataException::class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    fun processNotFoundException(
-        exception: WaffleException
-    ): ErrorResponse {
-        println("DEBUG: called processNotFoundException")
-        println("DEBUG: Caught $exception")
-        return ErrorResponse(ErrorType.DATA_NOT_FOUND.code, exception.message ?: "")
     }
 }

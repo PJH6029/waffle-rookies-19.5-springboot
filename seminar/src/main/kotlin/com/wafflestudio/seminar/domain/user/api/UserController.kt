@@ -30,7 +30,6 @@ class UserController(
 
     @PostMapping("/signin/")
     fun signin(@Valid @RequestBody signinRequest: UserDto.SigninRequest): ResponseEntity<UserDto.Response> {
-        println("signin")
         val user = userService.signin(signinRequest)
         val headers = HttpHeaders()
         headers.set("Authentication", jwtTokenProvider.generateToken(user.email))
