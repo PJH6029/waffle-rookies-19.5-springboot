@@ -23,15 +23,18 @@ class UserController(
     @PostMapping("/")
     fun signup(@Valid @RequestBody signupRequest: UserDto.SignupRequest): ResponseEntity<UserDto.Response> {
         val user = userService.signup(signupRequest)
-        val headers: HttpHeaders = HttpHeaders()
+        val headers = HttpHeaders()
         headers.set("Authentication", jwtTokenProvider.generateToken(user.email))
         return ResponseEntity<UserDto.Response>(UserDto.Response(user), headers, HttpStatus.CREATED)
     }
 
     @PostMapping("/signin/")
     fun signin(@Valid @RequestBody signinRequest: UserDto.SigninRequest): ResponseEntity<UserDto.Response> {
+        println("signin")
         val user = userService.signin(signinRequest)
-        return ResponseEntity<UserDto.Response>(UserDto.Response(user), HttpStatus.OK)
+        val headers = HttpHeaders()
+        headers.set("Authentication", jwtTokenProvider.generateToken(user.email))
+        return ResponseEntity<UserDto.Response>(UserDto.Response(user), headers, HttpStatus.OK)
     }
 
     @GetMapping("/me/")

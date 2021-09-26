@@ -1,6 +1,7 @@
 package com.wafflestudio.seminar.domain.seminar.api
 
 import com.wafflestudio.seminar.domain.seminar.dto.SeminarDto
+import com.wafflestudio.seminar.domain.seminar.model.Seminar
 import com.wafflestudio.seminar.domain.seminar.service.SeminarParticipantService
 import com.wafflestudio.seminar.domain.seminar.service.SeminarService
 import com.wafflestudio.seminar.domain.user.dto.UserDto
@@ -25,7 +26,6 @@ class SeminarController(
     ): SeminarDto.Response {
         seminarService.authorizeUnchargedInstructor(user)  // instructor자격 있고, 맡고있는 세미나가 없음
         val newSeminar = seminarService.createSeminar(createRequest, user.instructorProfile!!)
-        // TODO instructor 등록이 안됨
         return SeminarDto.Response(newSeminar)
     }
 
@@ -38,15 +38,15 @@ class SeminarController(
     ): SeminarDto.Response {
         val seminar = seminarService.getSeminarById(seminarId)
         val role = joinRequest.role
-        if (role == "participant") {
+
+        val savedSeminar: Seminar = if (role == "participant") {
             val participantProfile = seminarService.authorizeParticipant(user)
             seminarService.joinAsParticipant(participantProfile, seminar)
         } else {
             val instructorProfile = seminarService.authorizeUnchargedInstructor(user)  // instructor 자격이 있고, 맡고 있는 세미나가 없음
             seminarService.joinAsInstructor(instructorProfile, seminar)
         }
-        // TODO instructor / participant 등록이 안됨
-        return SeminarDto.Response(seminar)
+        return SeminarDto.Response(savedSeminar)
     }
 
     @DeleteMapping("/{seminar_id}/user/me/")

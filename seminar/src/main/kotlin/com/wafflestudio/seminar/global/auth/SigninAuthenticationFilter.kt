@@ -1,6 +1,7 @@
 package com.wafflestudio.seminar.global.auth
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.wafflestudio.seminar.domain.user.api.UserController
 import com.wafflestudio.seminar.global.auth.dto.LoginRequest
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse
 
 class SigninAuthenticationFilter(
     authenticationManager: AuthenticationManager?,
-    private val jwtTokenProvider: JwtTokenProvider
+    private val jwtTokenProvider: JwtTokenProvider,
 ) : UsernamePasswordAuthenticationFilter(authenticationManager) {
     init {
         setRequiresAuthenticationRequestMatcher(AntPathRequestMatcher("/api/v1/users/signin/", "POST"))
@@ -27,6 +28,7 @@ class SigninAuthenticationFilter(
         chain: FilterChain,
         authResult: Authentication
     ) {
+        // TODO redirect to filter
         response.addHeader("Authentication", jwtTokenProvider.generateToken(authResult))
         response.status = HttpServletResponse.SC_NO_CONTENT
     }

@@ -15,19 +15,22 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import javax.persistence.EntityManager
 
 @Service
 class UserService(
     private val userRepository: UserRepository,
     private val participantProfileRepository: ParticipantProfileRepository,
     private val instructorProfileRepository: InstructorProfileRepository,
-    private val passwordEncoder: PasswordEncoder
+    private val passwordEncoder: PasswordEncoder,
+    private val entityManager: EntityManager,
 ) {
     @Transactional
     fun signup(signupRequest: UserDto.SignupRequest): User {
         val encodedPassword = passwordEncoder.encode(signupRequest.password)
 
         val newUser = User(signupRequest.email, signupRequest.name, encodedPassword, roles = "ROLE_" + signupRequest.role.uppercase() + ",")
+        val savedUser = userRepository.save(newUser)
         if (signupRequest.role == "participant") {
             participantProfileRepository.save(
                 ParticipantProfile(
@@ -45,7 +48,8 @@ class UserService(
                 )
             )
         }
-        return userRepository.save(newUser)
+        entityManager.refresh(savedUser)
+        return savedUser
     }
 
     fun signin(signinRequest: UserDto.SigninRequest): User {
@@ -59,8 +63,6 @@ class UserService(
 
     @Transactional
     fun updateUser(user: User, updateRequest: UserDto.UpdateRequest): User {
-        // TODO
-
         if (user.participantProfile != null) {
             // TODO why can't smart cast??
             val updatedParticipantProfile = user.participantProfile?.updatedBy(updateRequest) ?: throw UserNotFoundException("Participant Not Found")
@@ -70,16 +72,16 @@ class UserService(
         
         
         if (user.instructorProfile != null) {
-            // TODO ParticipantProfile을 var로 만들기 vs val인 채로 새로운 객체 생성하기
+            // ParticipantProfile을 var로 만들기 vs val인 채로 새로운 객체 생성하기
             val updatedInstructorProfile = user.instructorProfile?.updatedBy(updateRequest) ?: throw UserNotFoundException("Instructor Not Found")
             updatedInstructorProfile.company = updateRequest.company
             instructorProfileRepository.save(updatedInstructorProfile)
             
         }
-
         return user
     }
 
+    @Transactional
     fun registerAsParticipant(user: User, registerRequest: ParticipantProfileDto.RegisterRequest): User {
         if(user.participantProfile != null) {
             throw AlreadyParticipantException()
@@ -93,7 +95,8 @@ class UserService(
             )
         )
 
-        // TODO refresh?
-        return user
+        val persistUser = entityManager.merge(user)
+        entityManager.refresh(persistUser)
+        return persistUser
     }
 }

@@ -18,12 +18,14 @@ import com.wafflestudio.seminar.domain.user.repository.InstructorProfileReposito
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import javax.persistence.EntityManager
 
 @Service
 class SeminarService(
     private val seminarRepository: SeminarRepository,
     private val instructorProfileRepository: InstructorProfileRepository,
     private val seminarParticipantRepository: SeminarParticipantRepository,
+    private val entityManager: EntityManager,
 ) {
     fun getSeminarById(id: Long): Seminar {
         return seminarRepository.findByIdOrNull(id) ?: throw SeminarNotFoundException()
@@ -64,11 +66,13 @@ class SeminarService(
         instructorProfile.seminar = newSeminar
         instructorProfileRepository.save(instructorProfile)
 
+        entityManager.refresh(savedSeminar)
         return savedSeminar
     }
 
 
-    fun joinAsParticipant(participantProfile: ParticipantProfile, seminar: Seminar): ParticipantProfile {
+    @Transactional
+    fun joinAsParticipant(participantProfile: ParticipantProfile, seminar: Seminar): Seminar {
         if (checkJoinedSeminar(participantProfile.user, seminar)) {
             throw AlreadyJoinedException()
         }
@@ -82,17 +86,25 @@ class SeminarService(
             participantProfile,
             seminar
         )
-        return seminarParticipantRepository.save(newSeminarParticipant).participantProfile
+        seminarParticipantRepository.save(newSeminarParticipant)
+
+        entityManager.refresh(seminar)
+        return seminar
     }
 
-    fun joinAsInstructor(instructorProfile: InstructorProfile, seminar: Seminar): InstructorProfile {
+    @Transactional
+    fun joinAsInstructor(instructorProfile: InstructorProfile, seminar: Seminar): Seminar {
         if (checkJoinedSeminar(instructorProfile.user, seminar)) {
             throw AlreadyJoinedException("You've joined this seminar as an instructor")
         }
         instructorProfile.seminar = seminar
-        return instructorProfileRepository.save(instructorProfile)
+        instructorProfileRepository.save(instructorProfile)
+
+        entityManager.refresh(seminar)
+        return seminar
     }
 
+    @Transactional
     fun dropSeminar(participantProfile: ParticipantProfile, seminar: Seminar): Seminar {
         val seminarParticipant = seminarParticipantRepository.findByParticipantProfileAndSeminar(participantProfile, seminar) ?: throw SeminarParticipantNotFound()
         return seminarParticipantRepository.save(seminarParticipant.dropped()).seminar
