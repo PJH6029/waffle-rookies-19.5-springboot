@@ -20,7 +20,8 @@ class ParticipantProfile (
     @field:NotNull
     val accepted: Boolean,
 
-    @OneToMany(mappedBy = "participantProfile", fetch = FetchType.EAGER)
+    //@OneToMany(mappedBy = "participantProfile", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "participantProfile", cascade = [CascadeType.ALL])
     val seminarParticipants: MutableSet<SeminarParticipant> = mutableSetOf(),
 
 ) : BaseTimeEntity() {

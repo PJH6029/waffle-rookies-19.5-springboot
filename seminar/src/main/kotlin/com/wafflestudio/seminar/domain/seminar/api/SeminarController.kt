@@ -2,7 +2,6 @@ package com.wafflestudio.seminar.domain.seminar.api
 
 import com.wafflestudio.seminar.domain.seminar.dto.SeminarDto
 import com.wafflestudio.seminar.domain.seminar.model.Seminar
-import com.wafflestudio.seminar.domain.seminar.service.SeminarParticipantService
 import com.wafflestudio.seminar.domain.seminar.service.SeminarService
 import com.wafflestudio.seminar.domain.user.dto.UserDto
 import com.wafflestudio.seminar.domain.user.model.User
@@ -16,7 +15,6 @@ import javax.validation.Valid
 @RequestMapping("/api/v1/seminars")
 class SeminarController(
     private val seminarService: SeminarService,
-    private val seminarParticipantService: SeminarParticipantService,
 ) {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)

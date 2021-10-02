@@ -29,7 +29,8 @@ class Seminar(
     @OneToMany(mappedBy = "seminar")
     val instructors: MutableSet<InstructorProfile> = mutableSetOf(),
 
-    @OneToMany(mappedBy = "seminar")
+    //@OneToMany(mappedBy = "seminar")
+    @OneToMany(mappedBy = "seminar", cascade = [CascadeType.ALL])
     val seminarParticipants: MutableSet<SeminarParticipant> = mutableSetOf()
 ) : BaseTimeEntity() {
     fun updatedBy(updateRequest: SeminarDto.UpdateRequest): Seminar {

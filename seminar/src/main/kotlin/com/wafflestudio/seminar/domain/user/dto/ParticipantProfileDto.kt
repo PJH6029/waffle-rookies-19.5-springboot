@@ -2,10 +2,7 @@ package com.wafflestudio.seminar.domain.user.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.wafflestudio.seminar.domain.seminar.dto.SeminarDto
-import com.wafflestudio.seminar.domain.seminar.model.Seminar
 import com.wafflestudio.seminar.domain.seminar.model.SeminarParticipant
-import com.wafflestudio.seminar.domain.seminar.repository.SeminarParticipantRepository
-import com.wafflestudio.seminar.domain.seminar.service.SeminarParticipantService
 import com.wafflestudio.seminar.domain.user.model.ParticipantProfile
 import java.time.LocalDateTime
 

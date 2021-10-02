@@ -21,9 +21,10 @@ class InstructorProfile(
     @field:Positive
     var year: Int? = null,
 
-    @ManyToOne
+    //@ManyToOne
+    @ManyToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "seminar_id", referencedColumnName = "id")
-    var seminar: Seminar? = null, // TODO var?
+    var seminar: Seminar? = null,
 
 ) : BaseTimeEntity() {
     fun updatedBy(updateRequest: UserDto.UpdateRequest): InstructorProfile {

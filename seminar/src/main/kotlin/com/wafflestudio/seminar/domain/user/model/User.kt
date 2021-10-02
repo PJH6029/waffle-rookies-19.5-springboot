@@ -29,13 +29,13 @@ class User(
     @field:NotNull
     val roles: String = "",
 
-    @OneToOne(mappedBy = "user")
+    //@OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL])
     val participantProfile: ParticipantProfile? = null,
 
-    @OneToOne(mappedBy = "user")
+    //@OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL])
     val instructorProfile: InstructorProfile? = null,
-
-
 
     ) : BaseTimeEntity() {
     @PreRemove

@@ -25,6 +25,8 @@ class UserService(
     private val passwordEncoder: PasswordEncoder,
     private val entityManager: EntityManager,
 ) {
+    // 마지막으로 수정된 친구를 저장?
+
     @Transactional
     fun signup(signupRequest: UserDto.SignupRequest): User {
         val encodedPassword = passwordEncoder.encode(signupRequest.password)
