@@ -20,10 +20,7 @@ import javax.persistence.EntityManager
 @Service
 class UserService(
     private val userRepository: UserRepository,
-    private val participantProfileRepository: ParticipantProfileRepository,
-    private val instructorProfileRepository: InstructorProfileRepository,
     private val passwordEncoder: PasswordEncoder,
-    private val entityManager: EntityManager,
 ) {
     // 마지막으로 수정된 친구를 저장?
 
@@ -32,30 +29,25 @@ class UserService(
         val encodedPassword = passwordEncoder.encode(signupRequest.password)
 
         val newUser = User(signupRequest.email, signupRequest.name, encodedPassword, roles = "ROLE_" + signupRequest.role.uppercase() + ",")
-        val savedUser = userRepository.save(newUser)
         if (signupRequest.role == "participant") {
-            participantProfileRepository.save(
-                ParticipantProfile(
-                    newUser,
-                    signupRequest.university,
-                    signupRequest.accepted
-                )
+            newUser.participantProfile = ParticipantProfile(
+                newUser,
+                signupRequest.university,
+                signupRequest.accepted
             )
+
         } else {
-            instructorProfileRepository.save(
-                InstructorProfile(
-                    newUser,
-                    signupRequest.company,
-                    signupRequest.year
-                )
+            newUser.instructorProfile = InstructorProfile(
+                newUser,
+                signupRequest.company,
+                signupRequest.year
             )
         }
-        entityManager.refresh(savedUser)
-        return savedUser
+        return userRepository.save(newUser)
     }
 
     fun signin(signinRequest: UserDto.SigninRequest): User {
-        return userRepository.findByEmailAndPassword(signinRequest.email, signinRequest.password)
+        return userRepository.findByEmailAndPassword(signinRequest.email, passwordEncoder.encode(signinRequest.password))
             ?: throw InvalidSignInException()
     }
 
@@ -67,20 +59,13 @@ class UserService(
     fun updateUser(user: User, updateRequest: UserDto.UpdateRequest): User {
         if (user.participantProfile != null) {
             // TODO why can't smart cast??
-            val updatedParticipantProfile = user.participantProfile?.updatedBy(updateRequest) ?: throw UserNotFoundException("Participant Not Found")
-            updatedParticipantProfile.university = updateRequest.university
-            participantProfileRepository.save(updatedParticipantProfile)
+            user.participantProfile = user.participantProfile?.updatedBy(updateRequest) ?: throw UserNotFoundException("Participant Not Found")
         }
-        
-        
+
         if (user.instructorProfile != null) {
-            // ParticipantProfile을 var로 만들기 vs val인 채로 새로운 객체 생성하기
-            val updatedInstructorProfile = user.instructorProfile?.updatedBy(updateRequest) ?: throw UserNotFoundException("Instructor Not Found")
-            updatedInstructorProfile.company = updateRequest.company
-            instructorProfileRepository.save(updatedInstructorProfile)
-            
+            user.instructorProfile = user.instructorProfile?.updatedBy(updateRequest) ?: throw UserNotFoundException("Instructor Not Found")
         }
-        return user
+        return userRepository.save(user)
     }
 
     @Transactional
@@ -89,16 +74,12 @@ class UserService(
             throw AlreadyParticipantException()
         }
 
-        participantProfileRepository.save(
-            ParticipantProfile(
-                user,
-                registerRequest.university,
-                registerRequest.accepted
-            )
+        user.participantProfile = ParticipantProfile(
+            user,
+            registerRequest.university,
+            registerRequest.accepted
         )
 
-        val persistUser = entityManager.merge(user)
-        entityManager.refresh(persistUser)
-        return persistUser
+        return userRepository.save(user)
     }
 }

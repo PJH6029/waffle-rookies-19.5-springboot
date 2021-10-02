@@ -31,11 +31,11 @@ class User(
 
     //@OneToOne(mappedBy = "user")
     @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL])
-    val participantProfile: ParticipantProfile? = null,
+    var participantProfile: ParticipantProfile? = null,
 
     //@OneToOne(mappedBy = "user")
     @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL])
-    val instructorProfile: InstructorProfile? = null,
+    var instructorProfile: InstructorProfile? = null,
 
     ) : BaseTimeEntity() {
     @PreRemove

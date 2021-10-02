@@ -41,17 +41,7 @@ class SeminarService(
     }
 
     @Transactional
-    fun updateSeminar(seminar: Seminar, updateRequest: SeminarDto.UpdateRequest): Seminar {
-        val participantCount = seminarParticipantRepository.findAllBySeminar(seminar).count()
-        if (updateRequest.capacity != null && updateRequest.capacity < participantCount) {
-            throw UnaffordableCapacityException()
-        }
-        val updatedSeminar = seminar.updatedBy(updateRequest)
-        return seminarRepository.save(updatedSeminar)
-    }
-
-    @Transactional
-    fun createSeminar(seminarCreateRequest: SeminarDto.CreateRequest, instructorProfile: InstructorProfile): Seminar {
+    fun createSeminar(seminarCreateRequest: SeminarDto.CreateRequest, validatedInstructorProfile: InstructorProfile): Seminar {
         val newSeminar = seminarCreateRequest.let {
             Seminar(
                 it.name,
@@ -61,19 +51,25 @@ class SeminarService(
                 it.online
             )
         }
-        val savedSeminar = seminarRepository.save(newSeminar)
 
-        instructorProfile.seminar = newSeminar
-        instructorProfileRepository.save(instructorProfile)
+        validatedInstructorProfile.seminar = newSeminar
+        return refreshed(instructorProfileRepository.save(validatedInstructorProfile).seminar!!)
+    }
 
-        entityManager.refresh(savedSeminar)
-        return savedSeminar
+    @Transactional
+    fun updateSeminar(seminar: Seminar, updateRequest: SeminarDto.UpdateRequest): Seminar {
+        val participantCount = seminarParticipantRepository.findAllBySeminar(seminar).count()
+        if (updateRequest.capacity != null && updateRequest.capacity < participantCount) {
+            throw UnaffordableCapacityException()
+        }
+        val updatedSeminar = seminar.updatedBy(updateRequest)
+        return seminarRepository.save(updatedSeminar)
     }
 
 
     @Transactional
-    fun joinAsParticipant(participantProfile: ParticipantProfile, seminar: Seminar): Seminar {
-        if (checkJoinedSeminar(participantProfile.user, seminar)) {
+    fun joinAsParticipant(validatedParticipantProfile: ParticipantProfile, seminar: Seminar): Seminar {
+        if (checkJoinedSeminar(validatedParticipantProfile.user, seminar)) {
             throw AlreadyJoinedException()
         }
 
@@ -83,34 +79,33 @@ class SeminarService(
         }
 
         val newSeminarParticipant = SeminarParticipant(
-            participantProfile,
+            validatedParticipantProfile,
             seminar
         )
-        seminarParticipantRepository.save(newSeminarParticipant)
-
-        entityManager.refresh(seminar)
-        return seminar
+        return refreshed(seminarParticipantRepository.save(newSeminarParticipant).seminar)
     }
 
     @Transactional
-    fun joinAsInstructor(instructorProfile: InstructorProfile, seminar: Seminar): Seminar {
-        if (checkJoinedSeminar(instructorProfile.user, seminar)) {
+    fun joinAsInstructor(validatedInstructorProfile: InstructorProfile, seminar: Seminar): Seminar {
+        if (checkJoinedSeminar(validatedInstructorProfile.user, seminar)) {
             throw AlreadyJoinedException("You've joined this seminar as an instructor")
         }
-        instructorProfile.seminar = seminar
-        instructorProfileRepository.save(instructorProfile)
-
-        entityManager.refresh(seminar)
-        return seminar
+        validatedInstructorProfile.seminar = seminar
+        return refreshed(instructorProfileRepository.save(validatedInstructorProfile).seminar!!)
     }
 
     @Transactional
     fun dropSeminar(participantProfile: ParticipantProfile, seminar: Seminar): Seminar {
         val seminarParticipant = seminarParticipantRepository.findByParticipantProfileAndSeminar(participantProfile, seminar) ?: throw SeminarParticipantNotFound()
         return seminarParticipantRepository.save(seminarParticipant.dropped()).seminar
-
     }
 
+    private fun refreshed(seminar: Seminar): Seminar {
+        entityManager.refresh(seminar)
+        return seminar
+    }
+
+    // authorize users
     fun authorizeUnchargedInstructor(user: User): InstructorProfile {
         val instructorProfile = user.instructorProfile ?: throw NotAllowedUserException("You're not an instructor")
         if (instructorProfile.seminar != null) {

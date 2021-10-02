@@ -12,7 +12,8 @@ class SeminarParticipant(
     @JoinColumn(name = "participant_profile_id", referencedColumnName = "id")
     val participantProfile: ParticipantProfile,
 
-    @ManyToOne  // TODO cascade test
+    //@ManyToOne  // TODO cascade test
+    @ManyToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "seminar_id", referencedColumnName = "id")
     val seminar: Seminar,
 
