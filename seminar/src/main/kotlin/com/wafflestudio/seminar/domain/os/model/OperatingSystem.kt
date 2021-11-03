@@ -3,7 +3,6 @@ package com.wafflestudio.seminar.domain.os.model
 import com.wafflestudio.seminar.domain.model.BaseEntity
 import com.wafflestudio.seminar.domain.survey.model.SurveyResponse
 import javax.persistence.*
-import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 

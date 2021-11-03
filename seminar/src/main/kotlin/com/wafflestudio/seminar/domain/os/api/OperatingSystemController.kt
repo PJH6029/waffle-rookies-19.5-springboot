@@ -2,9 +2,7 @@ package com.wafflestudio.seminar.domain.os.api
 
 import com.wafflestudio.seminar.domain.os.dto.OperatingSystemDto
 import com.wafflestudio.seminar.domain.os.service.OperatingSystemService
-import com.wafflestudio.seminar.domain.os.exception.OsNotFoundException
 import com.wafflestudio.seminar.global.common.dto.ListResponse
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
