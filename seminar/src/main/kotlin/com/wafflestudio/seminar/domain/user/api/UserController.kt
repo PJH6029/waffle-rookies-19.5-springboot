@@ -25,7 +25,8 @@ class UserController(
         val user = userService.signup(signupRequest)
         val headers = HttpHeaders()
         headers.set("Authentication", jwtTokenProvider.generateToken(user.email))
-        return ResponseEntity<UserDto.Response>(UserDto.Response(user), headers, HttpStatus.CREATED)
+        // return ResponseEntity<UserDto.Response>(UserDto.Response(user), headers, HttpStatus.CREATED)
+        return ResponseEntity.noContent().headers(headers).build()
     }
 
     @PostMapping("/signin/")
