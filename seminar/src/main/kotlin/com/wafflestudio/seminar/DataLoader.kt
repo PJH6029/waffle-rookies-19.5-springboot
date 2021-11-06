@@ -1,3 +1,4 @@
+/*
 package com.wafflestudio.seminar
 
 import com.wafflestudio.seminar.domain.os.model.OperatingSystem
@@ -80,7 +81,7 @@ class DataLoader(
             )
         )
 
-
+/*
         BufferedReader(FileReader(ClassPathResource("data/example_surveyresult.tsv").file)).use { br ->
             br.lines().forEach {
                 val rawSurveyResponse = it.split("\t")
@@ -97,5 +98,7 @@ class DataLoader(
                 surveyResponseRepository.save(newSurveyResponse)
             }
         }
+*/
     }
-}
+
+}*/
