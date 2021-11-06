@@ -2,20 +2,20 @@
 ## Test List
 ### User 관련 URI
 #### POST /api/v1/users/ (authorization 생략)
-- [x] 정상적인 회원가입, response body
-- [x] 중복된 email
+- [x] @정상적인 회원가입, response body
+- [x] @중복된 email
 - [x] participant profile 생성 확인
 - [x] instructor profile 생성 확인
 - [ ] 빈 body 무시 -> validation에서 걸림!
-- [x] validation: role, year
+- [x] @validation: role, year
 #### POST /api/v1/users/signin/ (authorization 생략)
-- [x] 정상적인 로그인, response body
-- [x] 로그인 실패(비번 or email 틀림) 401
+- [x] @정상적인 로그인, response body
+- [x] @로그인 실패(비번 or email 틀림) 401
 #### GET /api/v1/users/{user_id}/
-- [x] 200
-- [x] invalid user id
+- [x] @200
+- [x] @invalid user id
 #### GET /api/v1/users/me/
-- [x] 200
+- [x] @200
 #### PUT /api/v1/users/me/
 - [x] university 수정(값 or default), 200
 - [x] company 수정, 200
