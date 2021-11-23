@@ -10,7 +10,6 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
-
 @Entity
 class SurveyResponse(
     @ManyToOne
@@ -57,4 +56,4 @@ class SurveyResponse(
 
     @field:NotNull
     val timestamp: LocalDateTime = LocalDateTime.now(),
-): BaseEntity()
+) : BaseEntity()

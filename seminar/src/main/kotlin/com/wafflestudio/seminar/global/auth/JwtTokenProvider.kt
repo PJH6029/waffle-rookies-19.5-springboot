@@ -60,7 +60,7 @@ class JwtTokenProvider(private val userRepository: UserRepository) {
     }
 
     fun validateToken(authToken: String?): Boolean {
-        if(authToken.isNullOrEmpty()){
+        if (authToken.isNullOrEmpty()) {
             logger.error("Token is not provided")
             return false
         }
@@ -89,5 +89,4 @@ class JwtTokenProvider(private val userRepository: UserRepository) {
     fun removePrefix(tokenWithPrefix: String): String {
         return tokenWithPrefix.replace(tokenPrefix, "").trim { it <= ' ' }
     }
-
 }

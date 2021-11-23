@@ -41,7 +41,8 @@ class SeminarController(
             val participantProfile = seminarService.authorizeParticipant(user)
             seminarService.joinAsParticipant(participantProfile, seminar)
         } else {
-            val instructorProfile = seminarService.authorizeUnchargedInstructor(user)  // instructor 자격이 있고, 맡고 있는 세미나가 없음
+            val instructorProfile =
+                seminarService.authorizeUnchargedInstructor(user)  // instructor 자격이 있고, 맡고 있는 세미나가 없음
             seminarService.joinAsInstructor(instructorProfile, seminar)
         }
         return SeminarDto.Response(savedSeminar)
@@ -90,6 +91,6 @@ class SeminarController(
         val seminars =
             if (name != null) seminarService.getSeminarsByNameContains(name, earliest = earliest)
             else seminarService.getAllSeminars(earliest = earliest)
-        return ListResponse(seminars.map {SeminarDto.ListResponseElement(it)})
+        return ListResponse(seminars.map { SeminarDto.ListResponseElement(it) })
     }
 }

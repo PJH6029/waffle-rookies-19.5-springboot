@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull
 
 @Entity
 @Table(name = "seminar_participant_profile")
-class ParticipantProfile (
+class ParticipantProfile(
     @OneToOne
     @JoinColumn(name = "user")
     val user: User,
@@ -24,9 +24,9 @@ class ParticipantProfile (
     @OneToMany(mappedBy = "participantProfile")
     val seminarParticipants: MutableSet<SeminarParticipant> = mutableSetOf(),
 
-) : BaseTimeEntity() {
+    ) : BaseTimeEntity() {
     fun updatedBy(updateRequest: UserDto.UpdateRequest): ParticipantProfile {
-        this.university = updateRequest.university?: this.university
+        this.university = updateRequest.university ?: this.university
         return this
     }
 }

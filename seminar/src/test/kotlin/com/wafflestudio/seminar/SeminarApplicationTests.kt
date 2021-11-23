@@ -9,5 +9,4 @@ class SeminarApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }

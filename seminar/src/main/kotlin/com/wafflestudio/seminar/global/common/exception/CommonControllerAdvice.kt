@@ -1,10 +1,8 @@
 package com.wafflestudio.seminar.global.common.exception
 
-
 import org.slf4j.LoggerFactory
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.MissingRequestHeaderException
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -26,8 +24,7 @@ class CommonControllerAdvice {
         val bindingResult = exception.bindingResult
         val stringBuilder = StringBuilder()
 
-        bindingResult.fieldErrors.forEach {
-                fieldError ->
+        bindingResult.fieldErrors.forEach { fieldError ->
             stringBuilder.append(fieldError.field).append(": ")
             stringBuilder.append(fieldError.defaultMessage)
             stringBuilder.append(", ")

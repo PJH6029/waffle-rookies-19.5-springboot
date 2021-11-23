@@ -1,6 +1,6 @@
 package com.wafflestudio.seminar.global.common.exception
 
-enum class ErrorType (
+enum class ErrorType(
     val code: Int
 ) {
     INVALID_REQUEST(1000),
@@ -16,7 +16,6 @@ enum class ErrorType (
     PROFILE_NOT_FOUND(4004),
     SEMINAR_NOT_FOUND(4005),
     SEMINAR_PARTICIPANT_NOT_FOUND(4006),
-
 
     CONFLICT(9000),
     USER_ALREADY_EXISTS(9001),

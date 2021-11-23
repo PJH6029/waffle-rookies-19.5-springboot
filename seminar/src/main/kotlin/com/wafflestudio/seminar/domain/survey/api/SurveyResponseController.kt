@@ -38,5 +38,4 @@ class SurveyResponseController(
     ): SurveyResponseDto.Response {
         return SurveyResponseDto.Response(surveyResponseService.createSurveyResponse(surveyResponseCreateRequest, user))
     }
-
 }

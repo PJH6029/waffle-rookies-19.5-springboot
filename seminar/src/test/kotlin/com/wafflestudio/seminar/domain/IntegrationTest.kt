@@ -1,7 +1,5 @@
 package com.wafflestudio.seminar.domain.user.integration
 
-import com.wafflestudio.seminar.global.auth.SigninAuthenticationFilter
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -31,7 +29,7 @@ import javax.transaction.Transactional
 @SpringBootTest
 internal class IntegrationTest(
     private val mockMvc: MockMvc,
-    ) {
+) {
     @BeforeEach
     fun `회원가입`() {
         signupAsParticipantUser("hankp").andExpect {
@@ -138,7 +136,7 @@ internal class IntegrationTest(
         login("hanki", "hanki")
         result = get("users/me/")
         result.andExpect {
-            status {isOk()}
+            status { isOk() }
         }
         compare(result, "hanki_profile") // TODO
 
@@ -150,12 +148,9 @@ internal class IntegrationTest(
     @Test
     @Transactional
     fun `유저 정보 수정`() {
-
     }
 
-
     private fun compare(resultActionsDsl: ResultActionsDsl, data: String) {
-
     }
 
     private fun put(body: String): ResultActionsDsl {
@@ -170,7 +165,6 @@ internal class IntegrationTest(
         return mockMvc.get("/api/v1/$url")
     }
 
-
     private fun login(name: String, password: String): ResultActionsDsl {
         return mockMvc.post("/api/v1/users/signin/") {
             contentType = MediaType.APPLICATION_JSON
@@ -178,20 +172,20 @@ internal class IntegrationTest(
             content =
                 """
                         {
-                            "email": "${name}@snu.ac.kr",
-                            "password": "${password}"
+                            "email": "$name@snu.ac.kr",
+                            "password": "$password"
                         }
                 """.trimIndent()
-        }// .andReturn().response.getHeader("Authentication")
+        } // .andReturn().response.getHeader("Authentication")
     }
 
     private fun signupAsInstructorUser(name: String): ResultActionsDsl {
         val body =
             """
                 {
-                    "password": "${name}",
-                    "name": "${name}",
-                    "email": "${name}@snu.ac.kr",
+                    "password": "$name",
+                    "name": "$name",
+                    "email": "$name@snu.ac.kr",
                     "role": "instructor",
                     "company": "wafflestudio",
                     "year": "1"
@@ -204,9 +198,9 @@ internal class IntegrationTest(
         val body =
             """
                 {
-                    "password": "${name}",
-                    "name": "${name}",
-                    "email": "${name}@snu.ac.kr",
+                    "password": "$name",
+                    "name": "$name",
+                    "email": "$name@snu.ac.kr",
                     "role": "participant"
                 }
             """.trimIndent()
@@ -222,5 +216,4 @@ internal class IntegrationTest(
     }
 
     // 계속 업데이트 예정
-
 }

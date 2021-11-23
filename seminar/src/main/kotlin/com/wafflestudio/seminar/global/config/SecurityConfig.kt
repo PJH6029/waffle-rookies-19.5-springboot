@@ -32,7 +32,7 @@ class SecurityConfig(
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
-//        return Argon2PasswordEncoder()
+//       return Argon2PasswordEncoder()
         return BCryptPasswordEncoder()
     }
 
@@ -54,12 +54,9 @@ class SecurityConfig(
             .addFilter(SigninAuthenticationFilter(authenticationManager(), jwtTokenProvider))
             .addFilter(JwtAuthenticationFilter(authenticationManager(), jwtTokenProvider))
             .authorizeRequests()
-            .antMatchers("/api/v1/users/signin/").permitAll()  // Auth entrypoint
-            .antMatchers(HttpMethod.POST, "/api/v1/users/").anonymous()  // SignUp user
-            .antMatchers("/").permitAll()
-            //.antMatchers(HttpMethod.POST, "/api/v1/seminars/").hasRole("INSTRUCTOR")
+            .antMatchers("/api/v1/users/signin/").permitAll() // Auth entrypoint
+            .antMatchers(HttpMethod.POST, "/api/v1/users/").anonymous() // SignUp user
+            .antMatchers("/").permitAll() // .antMatchers(HttpMethod.POST, "/api/v1/seminars/").hasRole("INSTRUCTOR")
             .anyRequest().authenticated()
-
     }
-
 }

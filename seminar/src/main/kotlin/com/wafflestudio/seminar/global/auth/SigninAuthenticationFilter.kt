@@ -1,7 +1,6 @@
 package com.wafflestudio.seminar.global.auth
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.wafflestudio.seminar.domain.user.api.UserController
 import com.wafflestudio.seminar.global.auth.dto.LoginRequest
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -38,7 +37,7 @@ class SigninAuthenticationFilter(
         response: HttpServletResponse,
         failed: AuthenticationException
     ) {
-        super.unsuccessfulAuthentication(request, response, failed);
+        super.unsuccessfulAuthentication(request, response, failed)
         response.status = HttpServletResponse.SC_UNAUTHORIZED
     }
 
@@ -55,5 +54,4 @@ class SigninAuthenticationFilter(
         val objectMapper = ObjectMapper()
         return objectMapper.readValue(reader, LoginRequest::class.java)
     }
-
 }

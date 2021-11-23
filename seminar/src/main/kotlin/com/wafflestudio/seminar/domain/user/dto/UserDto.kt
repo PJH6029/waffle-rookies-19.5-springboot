@@ -22,14 +22,14 @@ class UserDto {
         val participantProfile: ParticipantProfileDto.UserInfoResponse?,
         @JsonProperty("instructor_profile")
         val instructorProfile: InstructorProfileDto.UserInfoResponse?
-        ) {
+    ) {
         constructor(user: User) : this(
             id = user.id,
             name = user.name,
             email = user.email,
             dateJoined = user.createdAt,
             participantProfile = user.participantProfile?.let { ParticipantProfileDto.UserInfoResponse(it) },
-            instructorProfile = user.instructorProfile?.let {InstructorProfileDto.UserInfoResponse(it)}
+            instructorProfile = user.instructorProfile?.let { InstructorProfileDto.UserInfoResponse(it) }
         )
     }
 

@@ -4,7 +4,7 @@ import com.wafflestudio.seminar.domain.seminar.dto.SeminarDto
 import com.wafflestudio.seminar.domain.user.model.InstructorProfile
 
 class InstructorProfileDto {
-    data class Response (
+    data class Response(
         val id: Long,
         val name: String,
         val email: String,
@@ -24,11 +24,11 @@ class InstructorProfileDto {
         val year: Int?,
         val charge: SeminarDto.SimpleResponse?
     ) {
-        constructor(instructorProfile: InstructorProfile): this(
+        constructor(instructorProfile: InstructorProfile) : this(
             id = instructorProfile.id,
             company = instructorProfile.company,
             year = instructorProfile.year,
-            charge = instructorProfile.seminar?.let {SeminarDto.SimpleResponse(it)}
+            charge = instructorProfile.seminar?.let { SeminarDto.SimpleResponse(it) }
         )
     }
 }

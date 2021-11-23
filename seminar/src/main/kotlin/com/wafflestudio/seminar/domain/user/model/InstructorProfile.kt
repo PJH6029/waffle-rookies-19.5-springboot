@@ -26,7 +26,7 @@ class InstructorProfile(
     @JoinColumn(name = "seminar_id", referencedColumnName = "id")
     var seminar: Seminar? = null,
 
-) : BaseTimeEntity() {
+    ) : BaseTimeEntity() {
     fun updatedBy(updateRequest: UserDto.UpdateRequest): InstructorProfile {
         this.company = updateRequest.company
         this.year = updateRequest.year

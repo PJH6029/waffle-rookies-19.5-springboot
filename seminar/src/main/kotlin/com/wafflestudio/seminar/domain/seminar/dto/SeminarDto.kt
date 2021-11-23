@@ -35,8 +35,13 @@ class SeminarDto {
             count = seminar.count,
             time = seminar.time,
             online = seminar.online,
-            instructors = seminar.instructors.map {InstructorProfileDto.Response(it)},
-            participants = seminar.seminarParticipants.map {ParticipantProfileDto.Response(it.participantProfile, it)},
+            instructors = seminar.instructors.map { InstructorProfileDto.Response(it) },
+            participants = seminar.seminarParticipants.map {
+                ParticipantProfileDto.Response(
+                    it.participantProfile,
+                    it
+                )
+            },
         )
     }
 
@@ -47,10 +52,10 @@ class SeminarDto {
         @JsonProperty("participant_count")
         val participantCount: Int,
     ) {
-        constructor(seminar: Seminar): this(
+        constructor(seminar: Seminar) : this(
             id = seminar.id,
             name = seminar.name,
-            instructors = seminar.instructors.map {InstructorProfileDto.Response(it)},
+            instructors = seminar.instructors.map { InstructorProfileDto.Response(it) },
             participantCount = seminar.seminarParticipants.count { !it.isActive }
         )
     }
@@ -64,7 +69,7 @@ class SeminarDto {
         @JsonProperty("dropped_at")
         val droppedAt: LocalDateTime?,
     ) {
-        constructor(seminarParticipant: SeminarParticipant): this(
+        constructor(seminarParticipant: SeminarParticipant) : this(
             id = seminarParticipant.seminar.id,
             name = seminarParticipant.seminar.name,
             joinedAt = seminarParticipant.createdAt,
@@ -77,7 +82,7 @@ class SeminarDto {
         val id: Long,
         val name: String,
     ) {
-        constructor(seminar: Seminar): this(
+        constructor(seminar: Seminar) : this(
             id = seminar.id,
             name = seminar.name,
         )

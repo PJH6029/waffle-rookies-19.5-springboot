@@ -1,24 +1,24 @@
 spring:
-  profiles:
-    active: test
+    profiles:
+        active: test
 app:
-  jwt:
-    jwt-secret-key: wafflestudio
-    jwt-expiration-in-ms: 10800000
+    jwt:
+        jwt-secret-key: wafflestudio
+        jwt-expiration-in-ms: 10800000
 
 ---
 
 spring:
-  config:
-    activate:
-      on-profile: test
-  datasource:
-    url: jdbc:mysql://localhost:3306/seminar?serverTimezone=UTC
-    username: waffle-spring
-    password: wafflestudio
-  jpa:
-    generate-ddl: true
-    hibernate:
-      ddl-auto: create
-    show-sql: true
+    config:
+        activate:
+            on-profile: test
+    datasource:
+        url: jdbc:mysql://localhost:3306/seminar?serverTimezone=UTC
+        username: waffle-spring
+        password: wafflestudio
+    jpa:
+        generate-ddl: true
+        hibernate:
+            ddl-auto: create
+        show-sql: true
 

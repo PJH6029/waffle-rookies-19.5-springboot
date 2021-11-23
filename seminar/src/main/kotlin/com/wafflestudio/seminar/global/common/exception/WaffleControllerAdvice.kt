@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 @RestControllerAdvice
 class WaffleControllerAdvice() {
     private val logger = LoggerFactory.getLogger(this.javaClass.name)
+
     @ExceptionHandler(value = [DataNotFoundException::class])
     fun notfound(e: WaffleException): ResponseEntity<ErrorResponse> {
         logger.error(e.errorType.name + " " + e.detail)
@@ -32,5 +33,4 @@ class WaffleControllerAdvice() {
         logger.error(e.errorType.name + " " + e.detail)
         return ResponseEntity(ErrorResponse(e.errorType.code, e.errorType.name, e.detail), HttpStatus.CONFLICT)
     }
-
 }
