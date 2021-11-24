@@ -22,6 +22,9 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
+        
+    - name: Move to gradle directory
+      run: cd seminar
     
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
