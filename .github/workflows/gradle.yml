@@ -29,7 +29,9 @@ jobs:
         echo `ls`
     
     - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
+      run: |
+        echo `ls`
+        chmod +x gradlew
     
     - name: Build with Gradle
       run: ./gradlew build
