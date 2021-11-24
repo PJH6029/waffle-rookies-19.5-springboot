@@ -37,7 +37,7 @@ jobs:
       run: mkdir deploy
       
     - name: Copy Jar
-      run: ./seminar/build/libs/*.jar ./deploy/
+      run: cp ./seminar/build/libs/*.jar ./deploy/
       
     - name: Make zip file
       run: zip -r -qq -j ./springboot-intro-build.zip ./deploy
