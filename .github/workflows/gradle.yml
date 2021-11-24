@@ -22,16 +22,13 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-        
-    - name: Move to gradle directory
-      run: |
-        cd seminar
-        echo `ls`
     
     - name: Grant execute permission for gradlew
       run: |
-        echo `ls`
+        cd seminar
         chmod +x gradlew
     
     - name: Build with Gradle
-      run: ./gradlew build
+      run: |
+        cd seminar
+        ./gradlew build
