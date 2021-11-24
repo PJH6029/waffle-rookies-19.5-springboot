@@ -24,7 +24,9 @@ jobs:
         distribution: 'adopt'
         
     - name: Move to gradle directory
-      run: cd seminar
+      run: |
+        cd seminar
+        echo `ls`
     
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
