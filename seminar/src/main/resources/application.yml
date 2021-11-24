@@ -41,7 +41,7 @@ spring:
 spring:
     config:
         activate:
-            on-profile: prod
+            on-profile: prod1
     datasource:
         url: jdbc:mysql://spring-seminar.c6v8laxmzgbw.ap-northeast-2.rds.amazonaws.com:3306/seminar?serverTimezone=UTC
         username: waffle-spring
@@ -50,5 +50,24 @@ spring:
         generate-ddl: true
         hibernate:
             ddl-auto: update
+server:
+    port: 8081
+
+---
+
+spring:
+    config:
+        activate:
+            on-profile: prod2
+    datasource:
+        url: jdbc:mysql://spring-seminar.c6v8laxmzgbw.ap-northeast-2.rds.amazonaws.com:3306/seminar?serverTimezone=UTC
+        username: waffle-spring
+        password: wafflestudio
+    jpa:
+        generate-ddl: true
+        hibernate:
+            ddl-auto: update
+server:
+    port: 8082
 
 

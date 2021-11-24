@@ -26,7 +26,6 @@ class ParticipantProfile(
     // @OneToMany(mappedBy = "participantProfile", fetch = FetchType.EAGER)
     @OneToMany(mappedBy = "participantProfile")
     val seminarParticipants: MutableSet<SeminarParticipant> = mutableSetOf(),
-
 ) : BaseTimeEntity() {
     fun updatedBy(updateRequest: UserDto.UpdateRequest): ParticipantProfile {
         this.university = updateRequest.university ?: this.university

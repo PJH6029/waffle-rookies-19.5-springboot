@@ -29,7 +29,6 @@ class InstructorProfile(
     @ManyToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "seminar_id", referencedColumnName = "id")
     var seminar: Seminar? = null,
-
 ) : BaseTimeEntity() {
     fun updatedBy(updateRequest: UserDto.UpdateRequest): InstructorProfile {
         this.company = updateRequest.company

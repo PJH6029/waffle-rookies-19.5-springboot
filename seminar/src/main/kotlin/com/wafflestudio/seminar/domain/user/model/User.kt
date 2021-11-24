@@ -40,7 +40,6 @@ class User(
     // @OneToOne(mappedBy = "user")
     @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL])
     var instructorProfile: InstructorProfile? = null,
-
 ) : BaseTimeEntity() {
     @PreRemove
     fun preRemove() {
