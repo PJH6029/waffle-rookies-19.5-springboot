@@ -215,5 +215,9 @@ internal class IntegrationTest(
         }
     }
 
+    private fun foo() {
+        println("foo")
+    }
+
     // 계속 업데이트 예정
 }
