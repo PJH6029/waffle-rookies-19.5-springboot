@@ -31,4 +31,4 @@ jobs:
     - name: Build with Gradle
       run: |
         cd seminar
-        ./gradlew build
+        ./gradlew bootJar
