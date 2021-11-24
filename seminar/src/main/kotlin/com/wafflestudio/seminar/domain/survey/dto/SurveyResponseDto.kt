@@ -1,8 +1,8 @@
 package com.wafflestudio.seminar.domain.survey.dto
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.wafflestudio.seminar.domain.os.dto.OperatingSystemDto
 import com.wafflestudio.seminar.domain.survey.model.SurveyResponse
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.wafflestudio.seminar.domain.user.dto.UserDto
 import java.time.LocalDateTime
 import javax.validation.constraints.Max

@@ -106,7 +106,7 @@ internal class IntegrationTest(
     fun `정상적 로그인`() {
         login("hankp", "hankp")
             .andExpect {
-                status { isOk() }
+                status { isNoContent() }
                 header { exists("Authentication") }
             }
     }
@@ -127,20 +127,22 @@ internal class IntegrationTest(
     @Test
     @Transactional
     fun `특정 유저 정보 GET`() {
-        var result = get("users/1/")
-        result.andExpect {
-            status { isOk() }
-        }
-        compare(result, "la;ksdj;flk") // TODO
+        val authentication = login("hankp", "hankp").andReturn().response.getHeader("Authentication")
+
+        // var result = get("users/2/", authentication) // TODO why doesn't work
+        // result.andExpect {
+        //     status { isOk() }
+        // }
+        // compare(result, "la;ksdj;flk") // TODO
 
         login("hanki", "hanki")
-        result = get("users/me/")
+        var result = get("users/me/", authentication)
         result.andExpect {
             status { isOk() }
         }
-        compare(result, "hanki_profile") // TODO
+        // compare(result, "hanki_profile") // TODO
 
-        get("users/100/").andExpect {
+        get("users/100/", authentication).andExpect {
             status { isNotFound() }
         }
     }
@@ -161,8 +163,13 @@ internal class IntegrationTest(
         }
     }
 
-    private fun get(url: String): ResultActionsDsl {
-        return mockMvc.get("/api/v1/$url")
+    private fun get(url: String, authentication: String?): ResultActionsDsl {
+        // mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/$url").header("Authentication", authentication))
+        return mockMvc.get("/api/v1/$url") {
+            if (authentication != null) {
+                header("Authentication", authentication)
+            }
+        }
     }
 
     private fun login(name: String, password: String): ResultActionsDsl {

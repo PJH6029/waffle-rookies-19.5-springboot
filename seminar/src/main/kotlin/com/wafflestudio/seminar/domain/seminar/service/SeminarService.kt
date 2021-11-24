@@ -32,7 +32,8 @@ class SeminarService(
     }
 
     fun getSeminarsByNameContains(name: String, earliest: Boolean = true): List<Seminar> {
-        return if (earliest) seminarRepository.findAllByNameContains(name) else seminarRepository.findAllByNameContainsOrderByCreatedAtDesc(
+        return if (earliest) seminarRepository.findAllByNameContains(name)
+        else seminarRepository.findAllByNameContainsOrderByCreatedAtDesc(
             name
         )
     }

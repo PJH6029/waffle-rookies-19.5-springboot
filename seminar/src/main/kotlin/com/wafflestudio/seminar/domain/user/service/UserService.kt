@@ -1,14 +1,14 @@
 package com.wafflestudio.seminar.domain.user.service
 
 import com.wafflestudio.seminar.domain.user.dto.ParticipantProfileDto
-import com.wafflestudio.seminar.domain.user.model.User
-import com.wafflestudio.seminar.domain.user.repository.UserRepository
 import com.wafflestudio.seminar.domain.user.dto.UserDto
 import com.wafflestudio.seminar.domain.user.exception.AlreadyParticipantException
 import com.wafflestudio.seminar.domain.user.exception.InvalidSignInException
 import com.wafflestudio.seminar.domain.user.exception.UserNotFoundException
 import com.wafflestudio.seminar.domain.user.model.InstructorProfile
 import com.wafflestudio.seminar.domain.user.model.ParticipantProfile
+import com.wafflestudio.seminar.domain.user.model.User
+import com.wafflestudio.seminar.domain.user.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service

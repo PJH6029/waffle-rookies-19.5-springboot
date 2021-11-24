@@ -1,17 +1,15 @@
 package com.wafflestudio.seminar.domain.seminar.dto
 
-import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.wafflestudio.seminar.domain.seminar.model.Seminar
 import com.wafflestudio.seminar.domain.seminar.model.SeminarParticipant
 import com.wafflestudio.seminar.domain.user.dto.InstructorProfileDto
 import com.wafflestudio.seminar.domain.user.dto.ParticipantProfileDto
-import com.wafflestudio.seminar.domain.user.model.InstructorProfile
-import com.wafflestudio.seminar.domain.user.model.ParticipantProfile
-import com.wafflestudio.seminar.global.common.dto.ListResponse
-import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDateTime
-import javax.validation.constraints.*
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Pattern
+import javax.validation.constraints.Positive
 
 /*
 seminar -> seminar_participants, seminar_participants.participant_profile
@@ -101,7 +99,7 @@ class SeminarDto {
         @field:Positive
         val count: Int,
 
-        //@field:DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss a")
+        // @field:DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss a")
         // @field:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "hh:mm", timezone = "Asia/Seoul")
         // TODO time format
         @field:NotBlank

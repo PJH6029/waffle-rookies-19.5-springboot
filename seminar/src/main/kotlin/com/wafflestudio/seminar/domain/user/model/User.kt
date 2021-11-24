@@ -1,10 +1,14 @@
 package com.wafflestudio.seminar.domain.user.model
 
-import com.wafflestudio.seminar.domain.model.BaseEntity
 import com.wafflestudio.seminar.domain.model.BaseTimeEntity
 import com.wafflestudio.seminar.domain.survey.model.SurveyResponse
-import com.wafflestudio.seminar.domain.user.dto.UserDto
-import javax.persistence.*
+import javax.persistence.CascadeType
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.OneToMany
+import javax.persistence.OneToOne
+import javax.persistence.PreRemove
+import javax.persistence.Table
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
@@ -29,18 +33,17 @@ class User(
     @field:NotNull
     val roles: String = "",
 
-    //@OneToOne(mappedBy = "user")
+    // @OneToOne(mappedBy = "user")
     @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL])
     var participantProfile: ParticipantProfile? = null,
 
-    //@OneToOne(mappedBy = "user")
+    // @OneToOne(mappedBy = "user")
     @OneToOne(mappedBy = "user", cascade = [CascadeType.ALL])
     var instructorProfile: InstructorProfile? = null,
 
-    ) : BaseTimeEntity() {
+) : BaseTimeEntity() {
     @PreRemove
     fun preRemove() {
         surveyResponses.forEach { it.user = null }
     }
 }
-

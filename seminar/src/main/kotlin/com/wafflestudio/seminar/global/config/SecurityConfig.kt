@@ -1,9 +1,9 @@
 package com.wafflestudio.seminar.global.config
 
-import com.wafflestudio.seminar.global.auth.SigninAuthenticationFilter
 import com.wafflestudio.seminar.global.auth.JwtAuthenticationEntryPoint
 import com.wafflestudio.seminar.global.auth.JwtAuthenticationFilter
 import com.wafflestudio.seminar.global.auth.JwtTokenProvider
+import com.wafflestudio.seminar.global.auth.SigninAuthenticationFilter
 import com.wafflestudio.seminar.global.auth.model.UserPrincipalDetailService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

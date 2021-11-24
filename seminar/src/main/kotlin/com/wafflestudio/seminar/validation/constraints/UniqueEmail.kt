@@ -12,4 +12,3 @@ annotation class UniqueEmail(
     val groups: Array<KClass<*>> = [],
     val payload: Array<KClass<out Payload>> = []
 )
-
