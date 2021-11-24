@@ -28,41 +28,41 @@ jobs:
         cd seminar
         chmod +x gradlew
     
-    - name: Build with Gradle
-      run: |
-        cd seminar
-        ./gradlew bootJar
+#     - name: Build with Gradle
+#       run: |
+#         cd seminar
+#         ./gradlew bootJar
         
-    - name: Make Directory for deliver
-      run: mkdir deploy
+#     - name: Make Directory for deliver
+#       run: mkdir deploy
       
-    - name: Copy Jar
-      run: cp ./seminar/build/libs/*.jar ./deploy/
+#     - name: Copy Jar
+#       run: cp ./seminar/build/libs/*.jar ./deploy/
       
-    - name: Make zip file
-      run: zip -r -qq -j ./springboot-intro-build.zip ./deploy
+#     - name: Make zip file
+#       run: zip -r -qq -j ./springboot-intro-build.zip ./deploy
       
-    - name: Deliver to AWS S3
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      run: |
-        aws s3 cp \
-        --region ap-northeast-2 \
-        --acl private \
-        ./springboot-intro-build.zip s3://springboot-deploy-intro-waffle/
+#     - name: Deliver to AWS S3
+#       env:
+#         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#       run: |
+#         aws s3 cp \
+#         --region ap-northeast-2 \
+#         --acl private \
+#         ./springboot-intro-build.zip s3://springboot-deploy-intro-waffle/
         
-    - name: Deploy
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      run: |
-        aws deploy create-deployment \
-        --application-name springboot-intro \
-        --deployment-group-name springboot-intro-deploy-group \
-        --file-exists-behavior OVERWRITE \
-        --s3-location bucket=springboot-deploy-intro-waffle,bundleType=zip,key=springboot-intro-build.zip \
-        --region ap-northeast-2
+#     - name: Deploy
+#       env:
+#         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#       run: |
+#         aws deploy create-deployment \
+#         --application-name springboot-intro \
+#         --deployment-group-name springboot-intro-deploy-group \
+#         --file-exists-behavior OVERWRITE \
+#         --s3-location bucket=springboot-deploy-intro-waffle,bundleType=zip,key=springboot-intro-build.zip \
+#         --region ap-northeast-2
 
         
 
