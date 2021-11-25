@@ -29,4 +29,4 @@ echo "> run $JAR_NAME with profile=$IDLE_PROFILE"
 
 nohup java -jar \
     -Dspring.profiles.active="$IDLE_PROFILE" \
-    "$JAR_NAME" > $REPOSITORY/nohup.out 2>&1 &
+    "$JAR_NAME" > $REPOSITORY/nohup-"$IDLE_PROFILE".out 2>&1 &
