@@ -13,7 +13,7 @@ class LandingController(
 ) {
     @GetMapping("/")
     fun pingPong(): PingPongResponse {
-        return PingPongResponse("hi")
+        return PingPongResponse("hi2")
     }
 
     @GetMapping("/profile")
