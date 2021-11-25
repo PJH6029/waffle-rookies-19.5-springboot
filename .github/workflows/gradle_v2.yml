@@ -41,7 +41,7 @@ jobs:
     - name: Build with Gradle
       run: |
         cd seminar
-        ./gradlew bootJar
+        ./gradlew bootJar --no-daemon
         
     - name: Make Directory for deliver
       run: mkdir deploy
