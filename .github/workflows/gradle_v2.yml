@@ -79,5 +79,7 @@ jobs:
         --file-exists-behavior OVERWRITE \
         --s3-location bucket=springboot-deploy-intro-waffle,bundleType=zip,key=springboot-intro-build.zip \
         --region ap-northeast-2
-
-        
+    - name: Cleanup Gradle Cache
+      run: |
+        rm -f ~/.gradle/caches/modules-2/modules-2.lock
+        rm -f ~/.gradle/caches/modules-2/gc.properties
