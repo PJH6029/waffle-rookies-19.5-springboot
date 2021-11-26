@@ -1,14 +1,12 @@
 package com.wafflestudio.seminar.domain.user.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.wafflestudio.seminar.domain.user.model.InstructorProfile
 import com.wafflestudio.seminar.domain.user.model.User
 import com.wafflestudio.seminar.validation.constraints.SeminarRole
 import com.wafflestudio.seminar.validation.constraints.UniqueEmail
 import java.time.LocalDateTime
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotNull
 import javax.validation.constraints.Positive
 
 class UserDto {
@@ -22,14 +20,14 @@ class UserDto {
         val participantProfile: ParticipantProfileDto.UserInfoResponse?,
         @JsonProperty("instructor_profile")
         val instructorProfile: InstructorProfileDto.UserInfoResponse?
-        ) {
+    ) {
         constructor(user: User) : this(
             id = user.id,
             name = user.name,
             email = user.email,
             dateJoined = user.createdAt,
             participantProfile = user.participantProfile?.let { ParticipantProfileDto.UserInfoResponse(it) },
-            instructorProfile = user.instructorProfile?.let {InstructorProfileDto.UserInfoResponse(it)}
+            instructorProfile = user.instructorProfile?.let { InstructorProfileDto.UserInfoResponse(it) }
         )
     }
 

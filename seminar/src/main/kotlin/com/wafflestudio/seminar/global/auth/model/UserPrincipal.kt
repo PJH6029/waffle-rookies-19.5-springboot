@@ -19,7 +19,6 @@ class UserPrincipal(val user: User) : UserDetails {
         return roles.map { role: String? -> SimpleGrantedAuthority(role) }
     }
 
-
     override fun isAccountNonExpired(): Boolean {
         return true
     }

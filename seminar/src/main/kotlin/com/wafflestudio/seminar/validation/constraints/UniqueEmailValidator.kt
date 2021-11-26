@@ -18,7 +18,6 @@ class UniqueEmailValidator(val userRepository: UserRepository) : ConstraintValid
                 context,
                 "Email $email already exists",
             )*/
-
         }
         return !isDuplicate
     }

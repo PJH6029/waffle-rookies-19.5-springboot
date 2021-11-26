@@ -32,16 +32,21 @@ class SeminarService(
     }
 
     fun getSeminarsByNameContains(name: String, earliest: Boolean = true): List<Seminar> {
-        return if (earliest) seminarRepository.findAllByNameContains(name) else seminarRepository.findAllByNameContainsOrderByCreatedAtDesc(name)
+        return if (earliest) seminarRepository.findAllByNameContains(name)
+        else seminarRepository.findAllByNameContainsOrderByCreatedAtDesc(
+            name
+        )
     }
 
     fun getAllSeminars(earliest: Boolean = true): List<Seminar> {
         return if (earliest) seminarRepository.findAll() else seminarRepository.findAllByOrderByCreatedAtDesc()
-
     }
 
     @Transactional
-    fun createSeminar(seminarCreateRequest: SeminarDto.CreateRequest, validatedInstructorProfile: InstructorProfile): Seminar {
+    fun createSeminar(
+        seminarCreateRequest: SeminarDto.CreateRequest,
+        validatedInstructorProfile: InstructorProfile
+    ): Seminar {
         val newSeminar = seminarCreateRequest.let {
             Seminar(
                 it.name,
@@ -65,7 +70,6 @@ class SeminarService(
         val updatedSeminar = seminar.updatedBy(updateRequest)
         return seminarRepository.save(updatedSeminar)
     }
-
 
     @Transactional
     fun joinAsParticipant(validatedParticipantProfile: ParticipantProfile, seminar: Seminar): Seminar {
@@ -96,7 +100,9 @@ class SeminarService(
 
     @Transactional
     fun dropSeminar(participantProfile: ParticipantProfile, seminar: Seminar): Seminar {
-        val seminarParticipant = seminarParticipantRepository.findByParticipantProfileAndSeminar(participantProfile, seminar) ?: throw SeminarParticipantNotFound()
+        val seminarParticipant =
+            seminarParticipantRepository.findByParticipantProfileAndSeminar(participantProfile, seminar)
+                ?: throw SeminarParticipantNotFound()
         return seminarParticipantRepository.save(seminarParticipant.dropped()).seminar
     }
 
@@ -128,7 +134,7 @@ class SeminarService(
 
     fun authorizeInstructorOfSeminar(user: User, seminar: Seminar): InstructorProfile {
         val instructorProfile = authorizeInstructor(user)
-        if (instructorProfile.id !in seminar.instructors.map{it.id}) {
+        if (instructorProfile.id !in seminar.instructors.map { it.id }) {
             throw NotAllowedUserException("You're not in charge of this seminar")
         }
         return instructorProfile
@@ -148,7 +154,7 @@ class SeminarService(
     }
 
     fun checkInstructorOfSeminar(instructorProfile: InstructorProfile, seminar: Seminar): Boolean {
-        if (instructorProfile.id in seminar.instructors.map{it.id}) {
+        if (instructorProfile.id in seminar.instructors.map { it.id }) {
             return true
         }
         return false

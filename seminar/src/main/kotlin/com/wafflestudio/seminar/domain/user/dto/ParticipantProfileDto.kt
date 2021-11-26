@@ -6,7 +6,6 @@ import com.wafflestudio.seminar.domain.seminar.model.SeminarParticipant
 import com.wafflestudio.seminar.domain.user.model.ParticipantProfile
 import java.time.LocalDateTime
 
-
 class ParticipantProfileDto {
     data class Response(
         val id: Long,
@@ -20,7 +19,7 @@ class ParticipantProfileDto {
         @JsonProperty("dropped_at")
         val droppedAt: LocalDateTime?,
     ) {
-        constructor(participantProfile: ParticipantProfile, seminarParticipant: SeminarParticipant): this(
+        constructor(participantProfile: ParticipantProfile, seminarParticipant: SeminarParticipant) : this(
             id = participantProfile.user.id,
             name = participantProfile.user.name,
             email = participantProfile.user.email,
@@ -37,11 +36,11 @@ class ParticipantProfileDto {
         val accepted: Boolean,
         val seminars: List<SeminarDto.UserInfoResponse>,
     ) {
-        constructor(participantProfile: ParticipantProfile): this(
+        constructor(participantProfile: ParticipantProfile) : this(
             id = participantProfile.id,
             university = participantProfile.university,
             accepted = participantProfile.accepted,
-            seminars = participantProfile.seminarParticipants.map {SeminarDto.UserInfoResponse(it)}
+            seminars = participantProfile.seminarParticipants.map { SeminarDto.UserInfoResponse(it) }
         )
     }
 
@@ -49,5 +48,4 @@ class ParticipantProfileDto {
         val university: String = "",
         val accepted: Boolean = true,
     )
-
 }

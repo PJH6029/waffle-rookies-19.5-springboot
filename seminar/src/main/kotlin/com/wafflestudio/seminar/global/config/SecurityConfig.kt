@@ -1,9 +1,9 @@
 package com.wafflestudio.seminar.global.config
 
-import com.wafflestudio.seminar.global.auth.SigninAuthenticationFilter
 import com.wafflestudio.seminar.global.auth.JwtAuthenticationEntryPoint
 import com.wafflestudio.seminar.global.auth.JwtAuthenticationFilter
 import com.wafflestudio.seminar.global.auth.JwtTokenProvider
+import com.wafflestudio.seminar.global.auth.SigninAuthenticationFilter
 import com.wafflestudio.seminar.global.auth.model.UserPrincipalDetailService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -32,7 +32,7 @@ class SecurityConfig(
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
-//        return Argon2PasswordEncoder()
+//       return Argon2PasswordEncoder()
         return BCryptPasswordEncoder()
     }
 
@@ -54,11 +54,10 @@ class SecurityConfig(
             .addFilter(SigninAuthenticationFilter(authenticationManager(), jwtTokenProvider))
             .addFilter(JwtAuthenticationFilter(authenticationManager(), jwtTokenProvider))
             .authorizeRequests()
-            .antMatchers("/api/v1/users/signin/").permitAll()  // Auth entrypoint
-            .antMatchers(HttpMethod.POST, "/api/v1/users/").anonymous()  // SignUp user
-            //.antMatchers(HttpMethod.POST, "/api/v1/seminars/").hasRole("INSTRUCTOR")
+            .antMatchers("/api/v1/users/signin/").permitAll() // Auth entrypoint
+            .antMatchers(HttpMethod.POST, "/api/v1/users/").anonymous() // SignUp user
+            .antMatchers("/").permitAll() // .antMatchers(HttpMethod.POST, "/api/v1/seminars/").hasRole("INSTRUCTOR")
+            .antMatchers("/profile").permitAll()
             .anyRequest().authenticated()
-
     }
-
 }

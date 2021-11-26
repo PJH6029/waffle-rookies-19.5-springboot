@@ -3,8 +3,12 @@ package com.wafflestudio.seminar.domain.seminar.model
 import com.wafflestudio.seminar.domain.model.BaseTimeEntity
 import com.wafflestudio.seminar.domain.seminar.dto.SeminarDto
 import com.wafflestudio.seminar.domain.user.model.InstructorProfile
-import javax.persistence.*
-import javax.validation.constraints.*
+import javax.persistence.Entity
+import javax.persistence.OneToMany
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Pattern
+import javax.validation.constraints.Positive
 
 @Entity
 class Seminar(
@@ -29,7 +33,7 @@ class Seminar(
     @OneToMany(mappedBy = "seminar")
     val instructors: MutableSet<InstructorProfile> = mutableSetOf(),
 
-    //@OneToMany(mappedBy = "seminar")
+    // @OneToMany(mappedBy = "seminar")
     @OneToMany(mappedBy = "seminar")
     val seminarParticipants: MutableSet<SeminarParticipant> = mutableSetOf()
 ) : BaseTimeEntity() {

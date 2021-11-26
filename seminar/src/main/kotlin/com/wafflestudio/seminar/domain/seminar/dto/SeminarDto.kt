@@ -1,17 +1,15 @@
 package com.wafflestudio.seminar.domain.seminar.dto
 
-import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.wafflestudio.seminar.domain.seminar.model.Seminar
 import com.wafflestudio.seminar.domain.seminar.model.SeminarParticipant
 import com.wafflestudio.seminar.domain.user.dto.InstructorProfileDto
 import com.wafflestudio.seminar.domain.user.dto.ParticipantProfileDto
-import com.wafflestudio.seminar.domain.user.model.InstructorProfile
-import com.wafflestudio.seminar.domain.user.model.ParticipantProfile
-import com.wafflestudio.seminar.global.common.dto.ListResponse
-import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDateTime
-import javax.validation.constraints.*
+import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Pattern
+import javax.validation.constraints.Positive
 
 /*
 seminar -> seminar_participants, seminar_participants.participant_profile
@@ -35,8 +33,13 @@ class SeminarDto {
             count = seminar.count,
             time = seminar.time,
             online = seminar.online,
-            instructors = seminar.instructors.map {InstructorProfileDto.Response(it)},
-            participants = seminar.seminarParticipants.map {ParticipantProfileDto.Response(it.participantProfile, it)},
+            instructors = seminar.instructors.map { InstructorProfileDto.Response(it) },
+            participants = seminar.seminarParticipants.map {
+                ParticipantProfileDto.Response(
+                    it.participantProfile,
+                    it
+                )
+            },
         )
     }
 
@@ -47,10 +50,10 @@ class SeminarDto {
         @JsonProperty("participant_count")
         val participantCount: Int,
     ) {
-        constructor(seminar: Seminar): this(
+        constructor(seminar: Seminar) : this(
             id = seminar.id,
             name = seminar.name,
-            instructors = seminar.instructors.map {InstructorProfileDto.Response(it)},
+            instructors = seminar.instructors.map { InstructorProfileDto.Response(it) },
             participantCount = seminar.seminarParticipants.count { !it.isActive }
         )
     }
@@ -64,7 +67,7 @@ class SeminarDto {
         @JsonProperty("dropped_at")
         val droppedAt: LocalDateTime?,
     ) {
-        constructor(seminarParticipant: SeminarParticipant): this(
+        constructor(seminarParticipant: SeminarParticipant) : this(
             id = seminarParticipant.seminar.id,
             name = seminarParticipant.seminar.name,
             joinedAt = seminarParticipant.createdAt,
@@ -77,7 +80,7 @@ class SeminarDto {
         val id: Long,
         val name: String,
     ) {
-        constructor(seminar: Seminar): this(
+        constructor(seminar: Seminar) : this(
             id = seminar.id,
             name = seminar.name,
         )
@@ -96,7 +99,7 @@ class SeminarDto {
         @field:Positive
         val count: Int,
 
-        //@field:DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss a")
+        // @field:DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss a")
         // @field:JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "hh:mm", timezone = "Asia/Seoul")
         // TODO time format
         @field:NotBlank

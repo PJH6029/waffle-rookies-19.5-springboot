@@ -8,7 +8,16 @@ import com.wafflestudio.seminar.domain.user.model.User
 import com.wafflestudio.seminar.global.auth.CurrentUser
 import com.wafflestudio.seminar.global.common.dto.ListResponse
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
 @RestController
@@ -22,7 +31,7 @@ class SeminarController(
         @RequestBody @Valid createRequest: SeminarDto.CreateRequest,
         @CurrentUser user: User,
     ): SeminarDto.Response {
-        seminarService.authorizeUnchargedInstructor(user)  // instructor자격 있고, 맡고있는 세미나가 없음
+        seminarService.authorizeUnchargedInstructor(user) // instructor자격 있고, 맡고있는 세미나가 없음
         val newSeminar = seminarService.createSeminar(createRequest, user.instructorProfile!!)
         return SeminarDto.Response(newSeminar)
     }
@@ -41,7 +50,8 @@ class SeminarController(
             val participantProfile = seminarService.authorizeParticipant(user)
             seminarService.joinAsParticipant(participantProfile, seminar)
         } else {
-            val instructorProfile = seminarService.authorizeUnchargedInstructor(user)  // instructor 자격이 있고, 맡고 있는 세미나가 없음
+            val instructorProfile =
+                seminarService.authorizeUnchargedInstructor(user) // instructor 자격이 있고, 맡고 있는 세미나가 없음
             seminarService.joinAsInstructor(instructorProfile, seminar)
         }
         return SeminarDto.Response(savedSeminar)
@@ -90,6 +100,6 @@ class SeminarController(
         val seminars =
             if (name != null) seminarService.getSeminarsByNameContains(name, earliest = earliest)
             else seminarService.getAllSeminars(earliest = earliest)
-        return ListResponse(seminars.map {SeminarDto.ListResponseElement(it)})
+        return ListResponse(seminars.map { SeminarDto.ListResponseElement(it) })
     }
 }
